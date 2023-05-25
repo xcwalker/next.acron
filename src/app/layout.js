@@ -1,7 +1,5 @@
-import './globals.css'
-import { Inter } from 'next/font/google'
-
-const inter = Inter({ subsets: ['latin'] })
+import { AuthContextProvider } from "@/context/AuthContext"
+import { Toaster } from "react-hot-toast"
 
 export const metadata = {
   title: 'Create Next App',
@@ -11,7 +9,19 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body>
+        <AuthContextProvider>
+          <Toaster
+            position="top-left"
+            reverseOrder={true}
+            containerStyle={{
+              top: "min(40px, max(4vw, 10px))",
+              left: "min(40px, max(4vw, 10px))"
+            }}
+          />
+          {children}
+        </AuthContextProvider>
+      </body>
     </html>
   )
 }
