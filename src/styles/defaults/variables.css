@@ -1,7 +1,5 @@
-html
-
-/* colors */
-    {
+html    {
+        /* colors */
     /** DO NOT USE **/
     /* foreground */
     --dnu-light-color-100: hsl(0, 0%, 93%);
@@ -18,10 +16,8 @@ html
     --dnu-dark-color-500: hsl(0, 0%, 31%);
 }
 
-html
-
-/* padding */
-    {
+html    {
+        /* padding */
     --default-padding: 10px;
     --header-padding: calc(var(--default-padding) * 1) min(calc(var(--default-padding) * 4), max(4vw, var(--default-padding)));
     --header-bottom-padding: var(--header-height) min(calc(var(--default-padding) * 4), max(4vw, var(--default-padding))) 0;
@@ -29,10 +25,8 @@ html
     --footer-padding: calc(var(--default-padding) * 2) min(calc(var(--default-padding) * 4), max(4vw, var(--default-padding)));
 }
 
-html
-
-/* sizing */
-    {
+html    {
+        /* sizing */
     --header-height: 52px;
 }
 

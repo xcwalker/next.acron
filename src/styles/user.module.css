@@ -1,6 +1,7 @@
 section.userSection {
     --_background-color: var(--background-color-200);
     --_background-color-100: var(--background-color-300);
+    --_background-color-200: var(--background-color-400);
     --_foreground-color: var(--foreground-color-100);
     --_foreground-color-100: var(--foreground-color-300);
 }
@@ -181,7 +182,7 @@ section.userSection>.container>.main>.navigation ol {
 
 section.userSection>.container>.main>.navigation ol a {
     /* sizing */
-    padding: 10px 20px;
+    padding: 8px 18px;
 
     /* flex */
     display: flex;
@@ -197,11 +198,18 @@ section.userSection>.container>.main>.navigation ol a {
     /* styling */
     border-radius: 5px;
     color: var(--_foreground-color);
+    border: 2px solid var(--_background-color);
     background-color: var(--_background-color);
+}
+
+section.userSection>.container>.main>.navigation ol a.active {
+    /* styling */
+    background-color: transparent;
 }
 
 section.userSection>.container>.main>.navigation ol a:hover,
 section.userSection>.container>.main>.navigation ol a:focus-visible {
     /* styling */
+    border: 2px solid var(--_background-color-100);
     background-color: var(--_background-color-100);
 }

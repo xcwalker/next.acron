@@ -3,27 +3,36 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-export async function RelativeLink(props) {
+export function RelativeLink(props) {
+    console.log(props)
+
     var path = usePathname()
-    var originalPath = usePathname()
+    var newPath = path;
+    var className;
 
     if (props.following) {
-        function pathCheck() {
-            if (path.endsWith(props.following)) {
+        async function pathCheck() {
+            if (newPath.endsWith(props.following)) {
                 return
             } else {
-                path = path.slice(0, -1)
+                newPath = newPath.slice(0, -1)
                 pathCheck()
             }
         }
         pathCheck()
     }
 
-    // if (props.activeClassName) {
-    //     if (path + props.href === originalPath) {
-    //         props.className = props.className + " " + props.activeClassName;
-    //     }
-    // }
+    if (props.active) {
+        if (newPath + props.href === path) {
+            if (props.className) {
+                className = props.className + " " + props.active;
+            } else {
+                className = props.active
+            }
+        }
+    } else {
+        className = props.className;
+    }
 
-    return <Link {...props} href={path + props.href} passHref >{props.children}</Link>
+    return <Link {...props} href={newPath + props.href} className={className} passHref prefetch={false}>{props.children}</Link>
 }
