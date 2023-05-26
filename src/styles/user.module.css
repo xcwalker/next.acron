@@ -1,0 +1,207 @@
+section.userSection {
+    --_background-color: var(--background-color-200);
+    --_background-color-100: var(--background-color-300);
+    --_foreground-color: var(--foreground-color-100);
+    --_foreground-color-100: var(--foreground-color-300);
+}
+
+section.userSection>.container {
+    /* sizing */
+    padding: var(--header-style-padding);
+
+    /* flex */
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 25px;
+}
+
+section.userSection>.container>.sidebar {
+    /* sizing */
+    width: min(500px, 100%);
+    flex-shrink: 0;
+
+    /* flex */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.user {
+    /* sizing */
+    width: 100%;
+    padding: 10px;
+
+    --_profilePicture-size: 85px;
+
+    /* flex */
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+    /* styling */
+    background-color: var(--_background-color);
+    border-radius: 10px;
+}
+
+.user .banner {
+    /* sizing */
+    width: 100%;
+    height: 100px;
+}
+
+.user .banner img {
+    /* sizing */
+    width: 100%;
+    height: 100%;
+
+    /* image */
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.user .info {
+    /* sizing */
+    width: 100%;
+    height: fit-content;
+    padding-inline: 25px;
+    padding-bottom: 0;
+
+    /* flex */
+    display: flex;
+    flex-direction: row;
+    gap: 25px;
+    justify-content: flex-start;
+}
+
+.user .info .profilePicture {
+    --_offset-multiplier: 1.75;
+
+    /* position */
+    position: relative;
+
+    /* sizing */
+    height: calc(var(--_profilePicture-size) / var(--_offset-multiplier));
+    width: var(--_profilePicture-size);
+}
+
+.user .info .profilePicture img {
+    /* position */
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    /* sizing */
+    height: var(--_profilePicture-size);
+    width: var(--_profilePicture-size);
+
+    /* image */
+    object-fit: cover;
+
+    /* styling */
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0px 0px 0px 5px var(--_background-color);
+}
+
+.user .info .profilePicture.online img {
+    box-shadow: 0px 0px 0px 2px var(--_background-color),
+        0px 0px 0px 4px var(--form-color-valid),
+        0px 0px 0px 6px var(--_background-color);
+}
+
+.user .info .profilePicture.offline img {
+    box-shadow: 0px 0px 0px 2px var(--_background-color),
+        0px 0px 0px 4px var(--form-color-invalid),
+        0px 0px 0px 6px var(--_background-color);
+}
+
+.user .info .profilePicture.away img {
+    box-shadow: 0px 0px 0px 2px var(--_background-color),
+        0px 0px 0px 4px var(--form-color-invalid-hold),
+        0px 0px 0px 6px var(--_background-color);
+}
+
+.user .info .names {
+    /* flex */
+    display: flex;
+    flex-direction: column;
+    gap: 2.5px;
+
+    /* styling */
+    color: var(--_foreground-color);
+}
+
+.user .info .names span.displayname {
+    /* text */
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1;
+}
+
+.user .info .names span.username {
+    /* text */
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1;
+
+    /* styling */
+    color: var(--_foreground-color-100);
+}
+
+section.userSection>.container>.main {
+    /* flex */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+section.userSection>.container>.main>.navigation {
+    /* sizing */
+    width: 100%;
+    height: fit-content;
+    overflow: hidden;
+}
+
+section.userSection>.container>.main>.navigation ol {
+    /* sizing */
+    width: 100%;
+    height: 100%;
+    overflow-y: hidden;
+    overflow-x: auto;
+    margin: 0;
+    padding: 0;
+
+    /* flex */
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}
+
+section.userSection>.container>.main>.navigation ol a {
+    /* sizing */
+    padding: 10px 20px;
+
+    /* flex */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    /* text */
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1;
+    text-decoration: none;
+
+    /* styling */
+    border-radius: 5px;
+    color: var(--_foreground-color);
+    background-color: var(--_background-color);
+}
+
+section.userSection>.container>.main>.navigation ol a:hover,
+section.userSection>.container>.main>.navigation ol a:focus-visible {
+    /* styling */
+    background-color: var(--_background-color-100);
+}

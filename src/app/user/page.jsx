@@ -12,7 +12,7 @@ export default function Page() {
   const [userData, setUserData] = useState();
 
   useEffect(() => {
-    if (user === null) router.push("/")
+    if (user === null) router.push("/account/login")
     if (user !== null) router.push("/user/" + user.uid)
   }, [user, router])
 
