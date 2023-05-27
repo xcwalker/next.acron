@@ -4,8 +4,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 export function RelativeLink(props) {
-    console.log(props)
-
     var path = usePathname()
     var newPath = path;
     var className;
@@ -29,6 +27,8 @@ export function RelativeLink(props) {
             } else {
                 className = props.active
             }
+        } else {
+            className = props.className;
         }
     } else {
         className = props.className;

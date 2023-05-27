@@ -28,7 +28,7 @@ section.userSection>.container>.sidebar {
     gap: 10px;
 }
 
-.user {
+section.userSection>.container>.sidebar>.user {
     /* sizing */
     width: 100%;
     padding: 10px;
@@ -45,13 +45,13 @@ section.userSection>.container>.sidebar {
     border-radius: 10px;
 }
 
-.user .banner {
+section.userSection>.container>.sidebar>.user .banner {
     /* sizing */
     width: 100%;
     height: 100px;
 }
 
-.user .banner img {
+section.userSection>.container>.sidebar>.user .banner img {
     /* sizing */
     width: 100%;
     height: 100%;
@@ -61,7 +61,7 @@ section.userSection>.container>.sidebar {
     border-radius: 10px;
 }
 
-.user .info {
+section.userSection>.container>.sidebar>.user .info {
     /* sizing */
     width: 100%;
     height: fit-content;
@@ -75,7 +75,7 @@ section.userSection>.container>.sidebar {
     justify-content: flex-start;
 }
 
-.user .info .profilePicture {
+section.userSection>.container>.sidebar>.user .info .profilePicture {
     --_offset-multiplier: 1.75;
 
     /* position */
@@ -86,7 +86,7 @@ section.userSection>.container>.sidebar {
     width: var(--_profilePicture-size);
 }
 
-.user .info .profilePicture img {
+section.userSection>.container>.sidebar>.user .info .profilePicture img {
     /* position */
     position: absolute;
     bottom: 0;
@@ -106,25 +106,25 @@ section.userSection>.container>.sidebar {
     box-shadow: 0px 0px 0px 5px var(--_background-color);
 }
 
-.user .info .profilePicture.online img {
+section.userSection>.container>.sidebar>.user .info .profilePicture.online img {
     box-shadow: 0px 0px 0px 2px var(--_background-color),
         0px 0px 0px 4px var(--form-color-valid),
         0px 0px 0px 6px var(--_background-color);
 }
 
-.user .info .profilePicture.offline img {
+section.userSection>.container>.sidebar>.user .info .profilePicture.offline img {
     box-shadow: 0px 0px 0px 2px var(--_background-color),
         0px 0px 0px 4px var(--form-color-invalid),
         0px 0px 0px 6px var(--_background-color);
 }
 
-.user .info .profilePicture.away img {
+section.userSection>.container>.sidebar>.user .info .profilePicture.away img {
     box-shadow: 0px 0px 0px 2px var(--_background-color),
         0px 0px 0px 4px var(--form-color-invalid-hold),
         0px 0px 0px 6px var(--_background-color);
 }
 
-.user .info .names {
+section.userSection>.container>.sidebar>.user .info .names {
     /* flex */
     display: flex;
     flex-direction: column;
@@ -134,14 +134,14 @@ section.userSection>.container>.sidebar {
     color: var(--_foreground-color);
 }
 
-.user .info .names span.displayname {
+section.userSection>.container>.sidebar>.user .info .names span.displayname {
     /* text */
     font-size: 20px;
     font-weight: 600;
     line-height: 1;
 }
 
-.user .info .names span.username {
+section.userSection>.container>.sidebar>.user .info .names span.username {
     /* text */
     font-size: 16px;
     font-weight: 700;
@@ -149,6 +149,140 @@ section.userSection>.container>.sidebar {
 
     /* styling */
     color: var(--_foreground-color-100);
+}
+
+section.userSection>.container>.sidebar>.button {
+    /* sizing */
+    width: 100%;
+    padding: 15px 25px;
+
+    /* flex */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    /* text */
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1;
+    text-decoration: none;
+
+    /* styling */
+    border-radius: 10px;
+    color: var(--_foreground-color);
+    border: 2px solid var(--_background-color);
+    background-color: var(--_background-color);
+}
+
+section.userSection>.container>.sidebar>.button:hover,
+section.userSection>.container>.sidebar>.button:focus-visible {
+    /* styling */
+    border: 2px solid var(--_background-color-100);
+    background-color: var(--_background-color-100);
+}
+
+section.userSection>.container>.sidebar>.markdown {
+    /* sizing */
+    width: 100%;
+    max-height: 300px;
+    margin: 0;
+    overflow: hidden;
+
+    /* styling */
+    border-radius: 10px;
+    color: var(--_foreground-color);
+    background-color: var(--_background-color);
+}
+
+section.userSection>.container>.sidebar>.markdown>.container {
+    /* sizing */
+    height: 100%;
+    padding: 10px;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    /* flex */
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+section.userSection>.container>.sidebar>.markdown>.container p {
+    /* sizing */
+    margin: 0;
+
+    /* flex */
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+section.userSection>.container>.sidebar>.links {
+    /* sizing */
+    width: 100%;
+    padding: 10px;
+
+    /* styling */
+    border-radius: 10px;
+    color: var(--_foreground-color);
+    background-color: var(--_background-color);
+}
+
+section.userSection>.container>.sidebar>.links ul {
+    /* sizing */
+    width: 100%;
+    height: fit-content;
+    margin: 0;
+    padding: 0;
+    --_size: 35px;
+
+    /* grid */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, var(--_size));
+    gap: 5px;
+}
+
+section.userSection>.container>.sidebar>.links ul li {
+    /* sizing */
+    width: var(--_size);
+    height: var(--_size);
+
+    /* styling */
+    list-style: none;
+}
+
+section.userSection>.container>.sidebar>.links ul li a {
+    /* sizing */
+    width: 100%;
+    height: 100%;
+    padding: 5px;
+
+    /* flex */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    /* styling */
+    border-radius: 5px;
+}
+
+section.userSection>.container>.sidebar>.links ul li a:hover,
+section.userSection>.container>.sidebar>.links ul li a:focus-visible {
+    /* styling */
+    background-color: var(--_background-color-100);
+}
+
+section.userSection>.container>.sidebar>.links ul li a img {
+    /* sizing */
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+
+    /* image */
+    object-fit: contain;
+    
+    /* styling */
+    border-radius: 5px;
 }
 
 section.userSection>.container>.main {

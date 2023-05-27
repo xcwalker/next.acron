@@ -5,7 +5,7 @@ module.exports = {
       return [
         {
           source: '/@:username/:path*',
-          destination: '/user/:username/:path*', // Matched parameters can be used in the destination
+          destination: '/user/@:username/:path*', // Matched parameters can be used in the destination
         },
         {
           source: '/$:treename/:path*',
