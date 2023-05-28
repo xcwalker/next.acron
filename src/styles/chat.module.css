@@ -22,7 +22,7 @@ section.chatSection>.container {
     /* flex */
     display: flex;
     flex-direction: row;
-    gap: 25px;
+    gap: 15px;
 }
 
 section.chatSection>.container>.sidebar {
@@ -65,9 +65,7 @@ section.chatSection>.container>.sidebar>.search {
     line-height: 1;
 
     /* styling */
-    border-radius: 5px;
-    background-color: var(--form-color-selector);
-    color: var(--dnu-light-color-100);
+    border-radius: 7.5px;
 }
 
 section.chatSection>.container>.sidebar>.search input[type="search"] {
@@ -115,7 +113,7 @@ section.chatSection>.container>.sidebar ul a {
     --_chatPicture-size: 50px;
 
     /* sizing */
-    height: fit-content;
+    height: calc(var(--_chatPicture-size) + 20px);
     padding: 10px 15px;
 
     /* flex */
@@ -127,7 +125,7 @@ section.chatSection>.container>.sidebar ul a {
     text-decoration: none;
 
     /* styling */
-    border-radius: 5px;
+    border-radius: 7.5px;
 }
 
 section.chatSection>.container>.sidebar ul a:hover,
@@ -237,7 +235,7 @@ section.chatSection>.container>.sidebar a.new {
     text-decoration: none;
 
     /* styling */
-    border-radius: 5px;
+    border-radius: 7.5px;
     background-color: var(--form-color-selector);
     color: var(--dnu-light-color-100);
 }
@@ -257,13 +255,99 @@ section.chatSection>.container>.main {
 
     /* grid */
     display: grid;
-    grid-template-rows: 50px 1fr 50px;
+    grid-template-rows: 60px 1fr 50px;
+}
+
+section.chatSection>.container>.main>.info {
+    /* sizing */
+    width: 100%;
+    height: 100%;
+    padding: 5px;
+
+    /* flex */
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 10px;
+
+    /* styling */
+    border-radius: 10px;
+    background-color: var(--_background-color);
+}
+
+section.chatSection>.container>.main>.info>a {
+    /* sizing */
+    width: fit-content;
+    height: 100%;
+    padding: 5px;
+    padding-right: 15px;
+
+    /* flex */
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 10px;
+
+    /* text */
+    text-decoration: none;
+
+    /* styling */
+    border-radius: 7.5px;
+}
+
+section.chatSection>.container>.main>.info>a:hover,
+section.chatSection>.container>.main>.info>a:focus-visible {
+    /* styling */
+    background-color: var(--_background-color-100);
+}
+
+section.chatSection>.container>.main>.info>a>img.chatPicture {
+    /* sizing */
+    --_size: 40px;
+    height: var(--_size);
+    width: var(--_size);
+
+    /* image */
+    object-fit: cover;
+
+    /* styling */
+    border-radius: 50%;
+}
+
+section.chatSection>.container>.main>.info>a>.content {
+    /* sizing */
+    height: 100%;
+
+    /* flex */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+section.chatSection>.container>.main>.info>a>.content span.title {
+    /* text */
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1;
+
+    /* styling */
+    color: var(--_foreground-color);
+}
+
+section.chatSection>.container>.main>.info>a>.content span.subTitle {
+    /* text */
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1;
+
+    /* styling */
+    color: var(--_foreground-color-100);
 }
 
 section.chatSection>.container>.main>.messages {
     /* sizing */
     width: 100%;
-    max-width: 1000px;
     height: 100%;
     max-height: 100%;
     overflow-y: scroll;
@@ -289,8 +373,21 @@ section.chatSection>.container>.main>.messages ol li {
     --_border-radius: 10px;
     --_border-radius-small: 2.5px;
 
+    /* sizing */
+    width: 1000px;
+    max-width: 100%;
+    margin-inline: auto;
+
     /* styling */
     list-style: none;
+}
+
+section.chatSection>.container>.main>.messages ol li .container {
+    /* sizing */
+    width: fit-content;
+    max-width: 350px;
+
+    /* styling */
     border-radius: var(--_border-radius);
 }
 
@@ -300,7 +397,7 @@ section.chatSection>.container>.main>.messages ol li p {
     padding: 10px 20px;
 }
 
-section.chatSection>.container>.main>.messages ol li.user {
+section.chatSection>.container>.main>.messages ol li.user .container {
     /* spacing */
     margin-left: auto;
     margin-right: 0;
@@ -309,20 +406,20 @@ section.chatSection>.container>.main>.messages ol li.user {
     background-color: var(--form-color-selector);
 }
 
-section.chatSection>.container>.main>.messages ol li.user:has(+ li.user) {
+section.chatSection>.container>.main>.messages ol li.user:has(+ li.user) .container {
     border-bottom-right-radius: var(--_border-radius-small);
 }
 
-section.chatSection>.container>.main>.messages ol li.user + li.user:has(+ li.user) {
+section.chatSection>.container>.main>.messages ol li.user+li.user:has(+ li.user) .container {
     border-top-right-radius: var(--_border-radius-small);
     border-bottom-right-radius: var(--_border-radius-small);
 }
 
-section.chatSection>.container>.main>.messages ol li.user + li.user {
+section.chatSection>.container>.main>.messages ol li.user+li.user .container {
     border-top-right-radius: var(--_border-radius-small);
 }
 
-section.chatSection>.container>.main>.messages ol li.otherUser {
+section.chatSection>.container>.main>.messages ol li.otherUser .container {
     /* spacing */
     margin-left: 0;
     margin-right: auto;
@@ -331,16 +428,16 @@ section.chatSection>.container>.main>.messages ol li.otherUser {
     background-color: var(--_background-color-100);
 }
 
-section.chatSection>.container>.main>.messages ol li.otherUser:has(+ li.otherUser) {
+section.chatSection>.container>.main>.messages ol li.otherUser:has(+ li.otherUser) .container {
     border-bottom-left-radius: var(--_border-radius-small);
 }
 
-section.chatSection>.container>.main>.messages ol li.otherUser + li.otherUser:has(+ li.otherUser) {
+section.chatSection>.container>.main>.messages ol li.otherUser+li.otherUser:has(+ li.otherUser) .container {
     border-top-left-radius: var(--_border-radius-small);
     border-bottom-left-radius: var(--_border-radius-small);
 }
 
-section.chatSection>.container>.main>.messages ol li.otherUser + li.otherUser {
+section.chatSection>.container>.main>.messages ol li.otherUser+li.otherUser .container {
     border-top-left-radius: var(--_border-radius-small);
 }
 

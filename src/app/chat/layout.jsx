@@ -100,7 +100,7 @@ function ChatItem(props) {
     useEffect(() => {
         props.chat.data.messages.sort((a, b) => a.date.localeCompare(b.date))
 
-        if (props.chat.data.messages[0].user === otherUserId) {
+        if (props.chat.data.messages[0].user === otherUserId && otherUser) {
             setLatestChatUsername(otherUser.about.displayname);
         } else if (props.chat.data.messages[0].user === props.user.uid) {
             setLatestChatUsername("You");
