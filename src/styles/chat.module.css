@@ -53,7 +53,6 @@ section.chatSection>.container>.sidebar>.search {
     /* sizing */
     margin: 5px;
     margin-bottom: 0;
-    overflow: hidden;
 
     /* flex */
     display: grid;
@@ -65,7 +64,7 @@ section.chatSection>.container>.sidebar>.search {
     line-height: 1;
 
     /* styling */
-    border-radius: 7.5px;
+    --_border-radius: 7.5px;
 }
 
 section.chatSection>.container>.sidebar>.search input[type="search"] {
@@ -80,14 +79,24 @@ section.chatSection>.container>.sidebar>.search input[type="search"] {
 
     /* styling */
     border-radius: 0;
+    border-top-left-radius: var(--_border-radius);
+    border-bottom-left-radius: var(--_border-radius);
     border: none;
     color: var(--_foreground-color);
     background-color: var(--_background-color-100);
 }
 
+section.chatSection>.container>.sidebar>.search input[type="search"]:focus-visible {
+    /* styling */
+    outline: 2px solid var(--form-color-selector);
+    outline-offset: -2px;
+}
+
 section.chatSection>.container>.sidebar>.search button {
     /* styling */
     border: none;
+    border-top-right-radius: var(--_border-radius);
+    border-bottom-right-radius: var(--_border-radius);
     color: var(--dnu-light-color-100);
     background-color: var(--form-color-selector);
     cursor: pointer;
@@ -98,6 +107,12 @@ section.chatSection>.container>.sidebar>.search button:focus-visible {
     /* styling */
     color: var(--_foreground-color);
     background-color: var(--_background-color-100);
+}
+
+section.chatSection>.container>.sidebar>.search button:focus-visible {
+    /* styling */
+    outline: 2px solid var(--form-color-selector);
+    outline-offset: -2px;
 }
 
 section.chatSection>.container>.sidebar ul {
@@ -134,6 +149,12 @@ section.chatSection>.container>.sidebar ul a:focus-visible {
     background-color: var(--_background-color-100);
 }
 
+section.chatSection>.container>.sidebar ul a:focus-visible {
+    /* styling */
+    outline: 2px solid var(--form-color-selector);
+    outline-offset: -2px;
+}
+
 section.chatSection>.container>.sidebar ul a.hidden {
     /* hiding */
     display: none;
@@ -155,6 +176,26 @@ section.chatSection>.container>.sidebar ul a .left img.chatPicture {
 
     /* styling */
     border-radius: 50%;
+}
+
+
+section.chatSection>.container>.sidebar ul a .left .icon {
+    /* sizing */
+    height: var(--_chatPicture-size);
+    width: var(--_chatPicture-size);
+
+    /* flex */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    /* text */
+    font-size: 25px;
+
+    /* styling */
+    border-radius: 50%;
+    background-color: var(--_background-color-100);
+    color: var(--_foreground-color);
 }
 
 section.chatSection>.container>.sidebar ul a .right {
@@ -247,6 +288,12 @@ section.chatSection>.container>.sidebar a.new:focus-visible {
     color: var(--_foreground-color);
 }
 
+section.chatSection>.container>.sidebar a.new:focus-visible {
+    /* styling */
+    outline: 2px solid var(--form-color-selector);
+    outline-offset: -2px;
+}
+
 section.chatSection>.container>.main {
     /* sizing */
     width: 100%;
@@ -256,6 +303,25 @@ section.chatSection>.container>.main {
     /* grid */
     display: grid;
     grid-template-rows: 60px 1fr 50px;
+}
+
+section.chatSection>.container>.main>.centre {
+    /* grid */
+    grid-row: 1/-1;
+
+    /* flex */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+}
+
+section.chatSection>.container>.main>.centre>span.text {
+    /* text */
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1;
 }
 
 section.chatSection>.container>.main>.info {
@@ -286,6 +352,7 @@ section.chatSection>.container>.main>.info>a {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
+    align-items: center;
     gap: 10px;
 
     /* text */
@@ -312,6 +379,27 @@ section.chatSection>.container>.main>.info>a>img.chatPicture {
 
     /* styling */
     border-radius: 50%;
+}
+
+
+section.chatSection>.container>.main>.info>a>.icon {
+    /* sizing */
+    --_size: 40px;
+    height: var(--_size);
+    width: var(--_size);
+
+    /* flex */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    /* text */
+    font-size: 25px;
+
+    /* styling */
+    border-radius: 50%;
+    background-color: var(--_background-color-100);
+    color: var(--_foreground-color);
 }
 
 section.chatSection>.container>.main>.info>a>.content {
@@ -351,7 +439,18 @@ section.chatSection>.container>.main>.messages {
     height: 100%;
     max-height: 100%;
     overflow-y: scroll;
+    overflow-anchor: auto;
     margin-inline: auto;
+}
+
+section.chatSection>.container>.main>.messages>.wrapper {
+    /* sizing */
+    width: 100%;
+    min-height: 100%;
+
+    /* flex */
+    display: flex;
+    flex-direction: column-reverse;
 }
 
 section.chatSection>.container>.main>.messages ol {
@@ -445,8 +544,141 @@ section.chatSection>.container>.main>.messages ol div#anchor {
     overflow-anchor: auto;
 }
 
-section.chatSection>.container>.main>.group_messages {}
 
-section.chatSection>.container>.main>.group_messages ol {}
+section.chatSection>.container>.main>.groupMessages {
+    /* sizing */
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
+    overflow-y: scroll;
+    overflow-anchor: auto;
+    margin-inline: auto;
+}
 
-section.chatSection>.container>.main>.group_messages ol li {}
+section.chatSection>.container>.main>.groupMessages>.wrapper {
+    /* sizing */
+    width: 100%;
+    min-height: 100%;
+
+    /* flex */
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+section.chatSection>.container>.main>.groupMessages ol {
+    /* sizing */
+    width: 100%;
+    min-height: 100%;
+    margin: 0;
+    padding: 0;
+
+    /* flex */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+section.chatSection>.container>.main>.groupMessages ol li {
+    /* sizing */
+    width: 100%;
+    padding: 4px 25px;
+    margin-block: 4px;
+    --_small-margin: 0px;
+
+    /* flex */
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+
+    /* styling */
+    border-radius: 7.5px;
+}
+
+section.chatSection>.container>.main>.groupMessages ol li.before {
+    margin-bottom: var(--_small-margin);
+}
+
+section.chatSection>.container>.main>.groupMessages ol li.following {
+    margin-top: var(--_small-margin);
+}
+
+section.chatSection>.container>.main>.groupMessages ol li.before.following {
+    margin-top: var(--_small-margin);
+    margin-bottom: var(--_small-margin);
+}
+
+section.chatSection>.container>.main>.groupMessages ol li:hover {
+    /* styling */
+    background-color: var(--_background-color);
+}
+
+section.chatSection>.container>.main>.groupMessages ol li .left {
+    /* sizing */
+    --_size: 40px;
+    width: var(--_size);
+
+    /* flex */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+section.chatSection>.container>.main>.groupMessages ol li .left img.profilePicture {
+    height: var(--_size);
+    width: var(--_size);
+
+    /* image */
+    object-fit: cover;
+
+    /* styling */
+    border-radius: 50%;
+}
+
+section.chatSection>.container>.main>.groupMessages ol li .right {
+    /* flex */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 5px;
+}
+
+section.chatSection>.container>.main>.groupMessages ol li .right a.name {
+    /* flex */
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 5px;
+
+    /* text */
+    text-decoration: none;
+}
+
+section.chatSection>.container>.main>.groupMessages ol li .right a.name span.displayname {
+    /* text */
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1;
+
+    /* styling */
+    color: var(--_foreground-color);
+}
+
+section.chatSection>.container>.main>.groupMessages ol li .right a.name span.username {
+    /* text */
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1;
+
+    /* styling */
+    color: var(--_foreground-color-100);
+}
+
+section.chatSection>.container>.main>.groupMessages ol li .right .messageContent {
+    /* text */
+    white-space: break-spaces;
+}
+
+section.chatSection>.container>.main>.groupMessages ol li .right .messageContent p {
+    margin: 0;
+}

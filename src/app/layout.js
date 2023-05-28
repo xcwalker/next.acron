@@ -4,6 +4,7 @@ import { Toaster } from "react-hot-toast"
 import "@/styles/defaults/page-setup.css"
 import "@/styles/defaults/variables.css"
 import "@/styles/defaults/transitions.css"
+import Navbar from "./navbar"
 
 export const metadata = {
   title: 'Create Next App',
@@ -26,7 +27,10 @@ export default function RootLayout({ children }) {
               left: "min(40px, max(4vw, 10px))"
             }}
           />
-          {children}
+          <Navbar />
+          <main>
+            {children}
+          </main>
         </AuthContextProvider>
       </body>
     </html>

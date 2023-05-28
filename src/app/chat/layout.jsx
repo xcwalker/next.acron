@@ -10,6 +10,12 @@ import getDocument from "@/firebase/firestore/getData";
 
 const db = getFirestore(firebase_app)
 
+export const metadata = {
+    title: 'Chat | Acron',
+    description: 'Chat with people on Acron',
+};
+
+
 export default function UserLayout({ children, params }) {
     const { user } = useAuthContext()
     const [chats, setChats] = useState()
@@ -112,10 +118,10 @@ function ChatItem(props) {
     }, [props.chat.data.messages, otherUser, otherUserId, props.user.uid])
 
 
-    return <Link href={"/chat/" + props.chat.id} className={props.hidden ? chatStyle.hidden : "" }>
+    return <Link href={"/chat/" + props.chat.id} className={props.hidden ? chatStyle.hidden : ""}>
         <div className={chatStyle.left}>
             {img && <img src={img} alt="" className={chatStyle.chatPicture} />}
-            {!img && <span class="material-symbols-outlined">chat</span>}
+            {!img && <span class={chatStyle.icon + " material-symbols-outlined"}>chat</span>}
         </div>
         <div className={chatStyle.right}>
             {props.chat.data.about.name !== "" && <span className={chatStyle.title}>{props.chat.data.about.name}</span>}
