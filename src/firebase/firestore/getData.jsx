@@ -4,7 +4,6 @@ import { doc, getDoc, getFirestore, query, collection, limit, where, getDocs, or
 const db = getFirestore(firebase_app)
 
 export default async function getDocument(collection, id) {
-    console.log(collection, id)
     let docRef = doc(db, collection, id);
 
     let result = null;

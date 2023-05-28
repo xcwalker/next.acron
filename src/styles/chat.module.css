@@ -6,6 +6,13 @@ section.chatSection {
     --_foreground-color: var(--foreground-color-100);
     --_foreground-color-100: var(--foreground-color-300);
 
+    --color-fg-default: var(--_foreground-color);
+    --color-accent-fg: var(--_foreground-color);
+    --color-canvas-default: var(--_background-color-100);
+    --color-border-default: var(--_background-color-100);
+    --color-neutral-muted: var(--_background-color-200);
+    --md-editor-font-family: 'Montserrat', sans-serif !important;
+
     /* sizing */
     width: 100%;
     height: 100vh;
@@ -300,9 +307,9 @@ section.chatSection>.container>.main {
     height: 100%;
     max-height: 100%;
 
-    /* grid */
-    display: grid;
-    grid-template-rows: 60px 1fr 50px;
+    /* flex */
+    display: flex;
+    flex-direction: column;
 }
 
 section.chatSection>.container>.main>.centre {
@@ -327,7 +334,7 @@ section.chatSection>.container>.main>.centre>span.text {
 section.chatSection>.container>.main>.info {
     /* sizing */
     width: 100%;
-    height: 100%;
+    height: 60px;
     padding: 5px;
 
     /* flex */
@@ -453,7 +460,7 @@ section.chatSection>.container>.main>.messages>.wrapper {
     flex-direction: column-reverse;
 }
 
-section.chatSection>.container>.main>.messages ol {
+section.chatSection>.container>.main>.messages>.wrapper>ol {
     /* sizing */
     width: 100%;
     min-height: 100%;
@@ -467,7 +474,7 @@ section.chatSection>.container>.main>.messages ol {
     gap: 5px;
 }
 
-section.chatSection>.container>.main>.messages ol li {
+section.chatSection>.container>.main>.messages>.wrapper>ol>li {
     /* variables */
     --_border-radius: 10px;
     --_border-radius-small: 2.5px;
@@ -481,7 +488,7 @@ section.chatSection>.container>.main>.messages ol li {
     list-style: none;
 }
 
-section.chatSection>.container>.main>.messages ol li .container {
+section.chatSection>.container>.main>.messages>.wrapper>ol>li .container {
     /* sizing */
     width: fit-content;
     max-width: 350px;
@@ -490,13 +497,13 @@ section.chatSection>.container>.main>.messages ol li .container {
     border-radius: var(--_border-radius);
 }
 
-section.chatSection>.container>.main>.messages ol li p {
+section.chatSection>.container>.main>.messages>.wrapper>ol>li p {
     /* sizing */
     margin: 0;
     padding: 10px 20px;
 }
 
-section.chatSection>.container>.main>.messages ol li.user .container {
+section.chatSection>.container>.main>.messages>.wrapper>ol>li.user .container {
     /* spacing */
     margin-left: auto;
     margin-right: 0;
@@ -505,20 +512,20 @@ section.chatSection>.container>.main>.messages ol li.user .container {
     background-color: var(--form-color-selector);
 }
 
-section.chatSection>.container>.main>.messages ol li.user:has(+ li.user) .container {
+section.chatSection>.container>.main>.messages>.wrapper>ol>li.user:has(+ li.user) .container {
     border-bottom-right-radius: var(--_border-radius-small);
 }
 
-section.chatSection>.container>.main>.messages ol li.user+li.user:has(+ li.user) .container {
+section.chatSection>.container>.main>.messages>.wrapper>ol>li.user+li.user:has(+ li.user) .container {
     border-top-right-radius: var(--_border-radius-small);
     border-bottom-right-radius: var(--_border-radius-small);
 }
 
-section.chatSection>.container>.main>.messages ol li.user+li.user .container {
+section.chatSection>.container>.main>.messages>.wrapper>ol>li.user+li.user .container {
     border-top-right-radius: var(--_border-radius-small);
 }
 
-section.chatSection>.container>.main>.messages ol li.otherUser .container {
+section.chatSection>.container>.main>.messages>.wrapper>ol>li.otherUser .container {
     /* spacing */
     margin-left: 0;
     margin-right: auto;
@@ -527,20 +534,20 @@ section.chatSection>.container>.main>.messages ol li.otherUser .container {
     background-color: var(--_background-color-100);
 }
 
-section.chatSection>.container>.main>.messages ol li.otherUser:has(+ li.otherUser) .container {
+section.chatSection>.container>.main>.messages>.wrapper>ol>li.otherUser:has(+ li.otherUser) .container {
     border-bottom-left-radius: var(--_border-radius-small);
 }
 
-section.chatSection>.container>.main>.messages ol li.otherUser+li.otherUser:has(+ li.otherUser) .container {
+section.chatSection>.container>.main>.messages>.wrapper>ol>li.otherUser+li.otherUser:has(+ li.otherUser) .container {
     border-top-left-radius: var(--_border-radius-small);
     border-bottom-left-radius: var(--_border-radius-small);
 }
 
-section.chatSection>.container>.main>.messages ol li.otherUser+li.otherUser .container {
+section.chatSection>.container>.main>.messages>.wrapper>ol>li.otherUser+li.otherUser .container {
     border-top-left-radius: var(--_border-radius-small);
 }
 
-section.chatSection>.container>.main>.messages ol div#anchor {
+section.chatSection>.container>.main>.messages>.wrapper>ol div#anchor {
     overflow-anchor: auto;
 }
 
@@ -565,7 +572,7 @@ section.chatSection>.container>.main>.groupMessages>.wrapper {
     flex-direction: column-reverse;
 }
 
-section.chatSection>.container>.main>.groupMessages ol {
+section.chatSection>.container>.main>.groupMessages>.wrapper>ol {
     /* sizing */
     width: 100%;
     min-height: 100%;
@@ -578,7 +585,7 @@ section.chatSection>.container>.main>.groupMessages ol {
     justify-content: flex-end;
 }
 
-section.chatSection>.container>.main>.groupMessages ol li {
+section.chatSection>.container>.main>.groupMessages>.wrapper>ol>li {
     /* sizing */
     width: 100%;
     padding: 4px 25px;
@@ -594,25 +601,25 @@ section.chatSection>.container>.main>.groupMessages ol li {
     border-radius: 7.5px;
 }
 
-section.chatSection>.container>.main>.groupMessages ol li.before {
+section.chatSection>.container>.main>.groupMessages>.wrapper>ol>li.before {
     margin-bottom: var(--_small-margin);
 }
 
-section.chatSection>.container>.main>.groupMessages ol li.following {
+section.chatSection>.container>.main>.groupMessages>.wrapper>ol>li.following {
     margin-top: var(--_small-margin);
 }
 
-section.chatSection>.container>.main>.groupMessages ol li.before.following {
+section.chatSection>.container>.main>.groupMessages>.wrapper>ol>li.before.following {
     margin-top: var(--_small-margin);
     margin-bottom: var(--_small-margin);
 }
 
-section.chatSection>.container>.main>.groupMessages ol li:hover {
+section.chatSection>.container>.main>.groupMessages>.wrapper>ol>li:hover {
     /* styling */
     background-color: var(--_background-color);
 }
 
-section.chatSection>.container>.main>.groupMessages ol li .left {
+section.chatSection>.container>.main>.groupMessages>.wrapper>ol>li .left {
     /* sizing */
     --_size: 40px;
     width: var(--_size);
@@ -623,7 +630,7 @@ section.chatSection>.container>.main>.groupMessages ol li .left {
     justify-content: flex-start;
 }
 
-section.chatSection>.container>.main>.groupMessages ol li .left img.profilePicture {
+section.chatSection>.container>.main>.groupMessages>.wrapper>ol>li .left img.profilePicture {
     height: var(--_size);
     width: var(--_size);
 
@@ -634,7 +641,11 @@ section.chatSection>.container>.main>.groupMessages ol li .left img.profilePictu
     border-radius: 50%;
 }
 
-section.chatSection>.container>.main>.groupMessages ol li .right {
+section.chatSection>.container>.main>.groupMessages>.wrapper>ol>li.following .left {
+    display: none;
+}
+
+section.chatSection>.container>.main>.groupMessages>.wrapper>ol>li .right {
     /* flex */
     display: flex;
     flex-direction: column;
@@ -642,7 +653,11 @@ section.chatSection>.container>.main>.groupMessages ol li .right {
     gap: 5px;
 }
 
-section.chatSection>.container>.main>.groupMessages ol li .right a.name {
+section.chatSection>.container>.main>.groupMessages>.wrapper>ol>li.following .right {
+    padding-left: 55px;
+}
+
+section.chatSection>.container>.main>.groupMessages>.wrapper>ol>li .right a.name {
     /* flex */
     display: flex;
     flex-direction: row;
@@ -654,7 +669,17 @@ section.chatSection>.container>.main>.groupMessages ol li .right a.name {
     text-decoration: none;
 }
 
-section.chatSection>.container>.main>.groupMessages ol li .right a.name span.displayname {
+section.chatSection>.container>.main>.groupMessages>.wrapper>ol>li.following .right a.name {
+    display: none;
+}
+
+section.chatSection>.container>.main>.groupMessages>.wrapper>ol>li .right a.name:hover span.displayname,
+section.chatSection>.container>.main>.groupMessages>.wrapper>ol>li .right a.name:focus-visible span.displayname {
+    /* text */
+    text-decoration: solid underline;
+}
+
+section.chatSection>.container>.main>.groupMessages>.wrapper>ol>li .right a.name span.displayname {
     /* text */
     font-size: 16px;
     font-weight: 600;
@@ -664,7 +689,7 @@ section.chatSection>.container>.main>.groupMessages ol li .right a.name span.dis
     color: var(--_foreground-color);
 }
 
-section.chatSection>.container>.main>.groupMessages ol li .right a.name span.username {
+section.chatSection>.container>.main>.groupMessages>.wrapper>ol>li .right a.name span.username {
     /* text */
     font-size: 12px;
     font-weight: 400;
@@ -674,11 +699,49 @@ section.chatSection>.container>.main>.groupMessages ol li .right a.name span.use
     color: var(--_foreground-color-100);
 }
 
-section.chatSection>.container>.main>.groupMessages ol li .right .messageContent {
+section.chatSection>.container>.main>.groupMessages>.wrapper>ol>li .right .messageContent {
     /* text */
     white-space: break-spaces;
 }
 
-section.chatSection>.container>.main>.groupMessages ol li .right .messageContent p {
+section.chatSection>.container>.main>.groupMessages>.wrapper>ol>li .right .messageContent p {
     margin: 0;
+}
+
+section.chatSection>.container>.main>.sender {
+    /* spacing */
+    margin-top: 25px;
+
+    /* grid */
+    display: grid;
+    grid-template-columns: 1fr 50px;
+}
+
+section.chatSection>.container>.main>.sender .editor {
+    /* sizing */
+    height: unset !important;
+    min-height: 70px;
+    max-height: 175px;
+
+    /* styling */
+    border-radius: 0;
+    border-top-left-radius: 7.5px;
+    border-bottom-left-radius: 7.5px;
+}
+
+section.chatSection>.container>.main>.sender button.send {
+    /* styling */
+    border-radius: 0;
+    border-top-right-radius: 7.5px;
+    border-bottom-right-radius: 7.5px;
+    background-color: var(--form-color-selector);
+    color: var(--dnu-light-color-100);
+    border: none;
+}
+
+section.chatSection>.container>.main>.sender button.send:hover,
+section.chatSection>.container>.main>.sender button.send:focus-visible {
+    /* styling */
+    background-color: var(--_background-color-100);
+    color: var(--_foreground-color);
 }

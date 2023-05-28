@@ -2,7 +2,7 @@
 
 import { useAuthContext } from "@/context/AuthContext";
 import firebase_app from "@/firebase/config";
-import { collection, getFirestore, onSnapshot, or, orderBy, query, where } from "firebase/firestore";
+import { collection, getFirestore, limit, onSnapshot, or, orderBy, query, where } from "firebase/firestore";
 import { Fragment, useEffect, useState } from "react"
 import chatStyle from "@/styles/chat.module.css"
 import Link from "next/link";
@@ -76,10 +76,36 @@ export default function UserLayout({ children, params }) {
 }
 
 function ChatItem(props) {
+    const [chatLatestMessage, setChatLatestMessage] = useState();
     const [otherUser, setOtherUser] = useState();
     const [otherUserId, setOtherUserId] = useState();
     const [latestChatUsername, setLatestChatUsername] = useState();
     const [img, setImg] = useState(props.chat.data.about?.image);
+
+    useEffect(() => {
+        const q = query(collection(db, "messages"), where("channel", "==", props.chat.id), orderBy("date", "desc"), limit(1));
+        const unsubscribe = onSnapshot(q, (querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                setChatLatestMessage({ data: doc.data(), id: doc.id });
+
+                if (doc.data().user === otherUserId && otherUser) {
+                    setLatestChatUsername(otherUser.about.displayname);
+                } else if (doc.data().user === props.user.uid) {
+                    setLatestChatUsername("You");
+                } else {
+                    getDocument("users", doc.data().user).then(res => {
+                        setLatestChatUsername(res.result.about.displayname);
+                    })
+                }
+            });
+        });
+
+        return () => {
+            unsubscribe()
+            setChatLatestMessage();
+            setLatestChatUsername();
+        };
+    }, [props.user.uid, props.chat.id, otherUserId, otherUser])
 
     useEffect(() => {
         if (props.chat.data.users.from === props.user.uid) {
@@ -103,21 +129,6 @@ function ChatItem(props) {
         }
     }, [props.chat.data.users.from, props.chat.data.users.to, props.chat.data.about.image, props.user])
 
-    useEffect(() => {
-        props.chat.data.messages.sort((a, b) => a.date.localeCompare(b.date))
-
-        if (props.chat.data.messages[0].user === otherUserId && otherUser) {
-            setLatestChatUsername(otherUser.about.displayname);
-        } else if (props.chat.data.messages[0].user === props.user.uid) {
-            setLatestChatUsername("You");
-        } else {
-            getDocument("users", props.chat.data.messages[0].user).then(res => {
-                setLatestChatUsername(res.result.about.displayname);
-            })
-        }
-    }, [props.chat.data.messages, otherUser, otherUserId, props.user.uid])
-
-
     return <Link href={"/chat/" + props.chat.id} className={props.hidden ? chatStyle.hidden : ""}>
         <div className={chatStyle.left}>
             {img && <img src={img} alt="" className={chatStyle.chatPicture} />}
@@ -126,9 +137,9 @@ function ChatItem(props) {
         <div className={chatStyle.right}>
             {props.chat.data.about.name !== "" && <span className={chatStyle.title}>{props.chat.data.about.name}</span>}
             {props.chat.data.about.name === "" && otherUser && <span className={chatStyle.title}>{otherUser.about.displayname}</span>}
-            {props.chat.data.messages[0] && <div className={chatStyle.latest}>
+            {chatLatestMessage && <div className={chatStyle.latest}>
                 {latestChatUsername && <span className={chatStyle.name}>{latestChatUsername}: </span>}
-                <p>{props.chat.data.messages[0].content}</p>
+                <p>{chatLatestMessage.data.content}</p>
             </div>}
         </div>
     </Link>
