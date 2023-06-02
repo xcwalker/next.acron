@@ -7,6 +7,7 @@ import { Fragment, useEffect, useState } from "react";
 import chatStyle from "@/styles/chat.module.css";
 import Link from "next/link";
 import getDocument from "@/firebase/firestore/getData";
+import RemoveMarkdown from "remove-markdown";
 
 const db = getFirestore(firebase_app);
 
@@ -166,7 +167,7 @@ function ChatItem(props) {
         {chatLatestMessage && (
           <div className={chatStyle.latest}>
             {latestChatUsername && <span className={chatStyle.name}>{latestChatUsername}: </span>}
-            <p>{chatLatestMessage.data.content}</p>
+            <p>{RemoveMarkdown(chatLatestMessage.data.content)}</p>
           </div>
         )}
       </div>

@@ -135,12 +135,13 @@ section.chatSection > .container > .sidebar ul a {
   --_chatPicture-size: 50px;
 
   /* sizing */
+  width: 100%;
   height: calc(var(--_chatPicture-size) + 20px);
   padding: 10px 15px;
 
   /* flex */
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: var(--_chatPicture-size) minmax(0, 1fr);
   gap: 15px;
 
   /* text */
@@ -228,10 +229,14 @@ section.chatSection > .container > .sidebar ul a .right span.title {
 
 section.chatSection > .container > .sidebar ul a .right .latest {
   /* display */
-  display: block;
+  display: flex;
+  flex-direction: row;
+  gap: 2.5px;
+  align-items: center;
 
   /* styling */
   color: var(--_foreground-color-100);
+  white-space: nowrap;
 }
 
 section.chatSection > .container > .sidebar ul a .right .latest span.name {
@@ -241,12 +246,12 @@ section.chatSection > .container > .sidebar ul a .right .latest span.name {
   /* text */
   font-size: 14px;
   font-weight: 500;
-  line-height: 1;
+  line-height: 18px;
 }
 
 section.chatSection > .container > .sidebar ul a .right .latest p {
   /* display */
-  display: inline;
+  display: block;
 
   /* spacing */
   margin: 0;
@@ -255,7 +260,14 @@ section.chatSection > .container > .sidebar ul a .right .latest p {
   /* text */
   font-size: 14px;
   font-weight: 500;
-  line-height: 1;
+  line-height: 18px;
+  text-overflow: ellipsis;
+
+  /* line limit */
+  overflow: hidden;
+  -webkit-line-clamp: 1; /* number of lines to show */
+  line-clamp: 1;
+  -webkit-box-orient: vertical;
 }
 
 section.chatSection > .container > .sidebar a.new {
@@ -545,7 +557,8 @@ section.chatSection > .container > .main > .messages > .wrapper > ol > li.otherU
   border-top-left-radius: var(--_border-radius-small);
 }
 
-section.chatSection > .container > .main > .messages > .wrapper > ol div#anchor {
+section.chatSection > .container > .main > .messages div#anchor,
+section.chatSection > .container > .main > .groupMessages div#anchor {
   overflow-anchor: auto;
 }
 
@@ -555,7 +568,7 @@ section.chatSection > .container > .main > .groupMessages {
   height: 100%;
   max-height: 100%;
   overflow-y: scroll;
-  overflow-anchor: auto;
+  /* overflow-anchor: auto; */
   margin-inline: auto;
 }
 
@@ -583,30 +596,30 @@ section.chatSection > .container > .main > .groupMessages > .wrapper > ol {
 }
 
 section.chatSection > .container > .main > .groupMessages > .wrapper > ol > .divider {
-    /* position */
-    position: relative;
+  /* position */
+  position: relative;
 
-    /* sizing */
-    width: 100%;
-    height: 2px;
-    margin-block: 8px;
+  /* sizing */
+  width: 100%;
+  height: 2px;
+  margin-block: 8px;
 
-    /* styling */
-    border-radius: 100vmax;
-    background-color: var(--_background-color-100);
+  /* styling */
+  border-radius: 100vmax;
+  background-color: var(--_background-color-100);
 }
 section.chatSection > .container > .main > .groupMessages > .wrapper > ol > .divider > .date {
-    /* position */
-    position: absolute;
-    top: 50%;
-    left: 21px;
-    translate: 0 -50%;
+  /* position */
+  position: absolute;
+  top: 50%;
+  left: 17px;
+  translate: 0 -50%;
 
-    /* sizing */
-    padding: 2px 4px;
-    
-    /* styling */
-    background-color: var(--background-color-100);
+  /* sizing */
+  padding: 2px 8px;
+
+  /* styling */
+  background-color: var(--background-color-100);
 }
 
 section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li {
@@ -626,6 +639,107 @@ section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li {
 
   /* styling */
   border-radius: 7.5px;
+}
+
+section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li.system {
+  /* text */
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1;
+
+  /* styling */
+  color: var(--_foreground-color-100);
+}
+
+section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li.system > .time {
+  top: 50%;
+}
+
+section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li > .controls {
+  /* position */
+  position: absolute;
+  top: 0;
+  right: 25px;
+  translate: 0 -35%;
+
+  /* variables */
+  --_button-size: 30px;
+  --_padding: 0;
+  --_border-radius: 5px;
+
+  /* sizing */
+  width: fit-content;
+  height: calc(var(--_button-size) + (Var(--_padding) * 2));
+  padding: var(--_padding);
+
+  /* flex */
+  display: flex;
+  flex-direction: row;
+  gap: var(--_padding);
+
+  /* styling */
+  border-radius: var(--_border-radius);
+  color: var(--_foreground-color-100);
+  background-color: var(--_background-color-100);
+  overflow: hidden;
+
+  /* hiding */
+  opacity: 0;
+  pointer-events: none;
+}
+
+section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li:hover > .controls,
+section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li:focus-within > .controls,
+section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li > .controls:hover,
+section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li > .controls:focus-within {
+  /* hiding */
+  opacity: 1;
+  pointer-events: auto;
+}
+
+section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li > .controls button {
+  /* sizing */
+  width: var(--_button-size);
+  min-width: var(--_button-size);
+  height: var(--_button-size);
+  padding: var(--_padding);
+
+  /* flex */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: var(--_padding);
+
+  /* styling */
+  border: none;
+  color: inherit;
+  background-color: transparent;
+  /* border-radius: calc(var(--_border-radius) - var(--_padding)); */
+}
+
+section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li > .controls button span:global(.material-symbols-outlined) {
+  /* text */
+  font-size: calc((var(--_button-size) / 3) * 2);
+}
+
+section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li > .controls button.delete {
+  /* styling */
+  /* border: 2px solid var(--form-color-invalid); */
+  /* background-color: var(--form-color-invalid-opac); */
+  color: var(--form-color-invalid);
+}
+
+section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li > .controls button.delete:hover,
+section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li > .controls button.delete:focus-visible {
+  /* styling */
+  background-color: var(--form-color-invalid);
+  color: var(--dnu-light-color-100);
+}
+
+section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li > .controls button:hover,
+section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li > .controls button:focus-visible {
+  background-color: var(--_background-color-200);
 }
 
 section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li.before {
@@ -706,6 +820,7 @@ section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li .
   gap: 5px;
 }
 
+section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li.system .right,
 section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li.following .right {
   padding-left: 55px;
 }
@@ -769,6 +884,82 @@ section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li .
 
 section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li .right .messageContent p {
   margin: 0;
+}
+
+section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li .right .messageContent blockquote {
+  /* position */
+  position: relative;
+
+  /* sizing */
+  margin: 0;
+  padding-block: 5px;
+  padding-left: 15px;
+
+  /* text */
+  white-space: initial;
+}
+section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li .right .messageContent blockquote::after {
+  /* content */
+  content: "";
+
+  /* position */
+  position: absolute;
+  inset: 0;
+  right: auto;
+
+  /* sizing */
+  width: 4px;
+  height: 100%;
+
+  /* styling */
+  background-color: var(--_background-color-100);
+  border-radius: 100vmax;
+}
+section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li .right .messageContent a {
+  /* text */
+  text-decoration: underline solid;
+
+  /* styling */
+  color: var(--form-color-selector);
+  border-radius: 1px;
+}
+section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li .right .messageContent a:hover,
+section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li .right .messageContent a:focus-visible {
+  /* text */
+  text-decoration: underline dashed;
+}
+
+section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li .right .messageContent a:focus-visible {
+  /* styling */
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+
+/* section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li .right .messageContent em {} */
+/* section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li .right .messageContent strong {} */
+section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li .right .messageContent ul {
+  /* sizing */
+  padding-left: 15px;
+
+  /* text */
+  white-space: initial;
+}
+section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li .right .messageContent :global(.contains-task-list) {
+  /* sizing */
+  padding-left: 0;
+
+  /* text */
+  white-space: initial;
+
+  /* styling */
+  list-style: none;
+}
+section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li .right .messageContent ol {
+  /* sizing */
+  padding-left: 15px;
+
+  /* text */
+  white-space: initial;
 }
 
 section.chatSection > .container > .main > .sender {

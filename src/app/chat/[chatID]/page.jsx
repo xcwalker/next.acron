@@ -14,6 +14,7 @@ import dynamic from "next/dynamic";
 import * as commands from "@uiw/react-md-editor/esm/commands";
 import "@uiw/react-md-editor/markdown-editor.css";
 import remarkGfm from "remark-gfm";
+import removeDoc from "@/firebase/firestore/removeData";
 
 const MDEditor = dynamic(() => import("@uiw/react-md-editor"), { ssr: false });
 
@@ -35,12 +36,26 @@ export default function Page({ params }) {
   }, [params.chatID]);
 
   useEffect(() => {
-    const q = query(collection(db, "messages"), where("channel", "==", params.chatID), orderBy("date", "desc"), limit(30));
+    const q = query(collection(db, "messages"), where("channel", "==", params.chatID), orderBy("date", "desc"), limit(45));
     const unsubscribe = onSnapshot(q, async (querySnapshot) => {
       querySnapshot.forEach((doc) => {
         setMessages((m) => {
           if (m.length === 0) {
             return [{ data: doc.data(), id: doc.id }];
+          }
+          if (m.some((d) => d.id === doc.id)) {
+            var index = m.findIndex((d) => d.id === doc.id);
+            var arr = m;
+            if (m[index].data.content !== doc.data().content) {
+              arr[index].data.content = doc.data().content;
+              arr[index].data.previousMessages = doc.data().previousMessages;
+              if (m[index].data.type !== doc.data().type) {
+                arr[index].data.type = doc.data().type;
+                return arr;
+              } else {
+                return arr;
+              }
+            }
           }
           return m.some((d) => d.id === doc.id) ? [...m] : [...m, { data: doc.data(), id: doc.id }];
         });
@@ -96,14 +111,10 @@ export default function Page({ params }) {
     });
   };
 
-  const handleKeyDown = (e) => {
-    if (e.keyCode == 13 || e.keyCode == 17) {
-      if (!e.ctrlKey) {
-        return true;
-      }
-
+  const handleKeyUp = (e) => {
+    if (e.ctrlKey && e.keyCode == 13) {
       e.preventDefault();
-      document.querySelector("button." + chatStyle.send).click();
+      handleNewMessage();
     }
   };
 
@@ -155,10 +166,12 @@ export default function Page({ params }) {
                       .sort((a, b) => a.data.date.localeCompare(b.data.date))
                       .map((message, index) => {
                         var messageDate = new Date(message.data.date);
-                        var className = "";
+                        var className = message.data.type ? chatStyle[message.data.type] : "";
                         if (
                           messages[index + 1] &&
                           messages[index + 1].data.user === message.data.user &&
+                          messages[index + 1].data.type !== "system" &&
+                          message.data.type !== "system" &&
                           (new Date(messages[index + 1].data.date) - messageDate) / (1000 * 60 * 60 * 24) < 0.5
                         ) {
                           className = className + " " + chatStyle.before;
@@ -166,6 +179,8 @@ export default function Page({ params }) {
                         if (
                           messages[index - 1] &&
                           messages[index - 1].data.user === message.data.user &&
+                          messages[index - 1].data.type !== "system" &&
+                          message.data.type !== "system" &&
                           (messageDate - new Date(messages[index - 1].data.date)) / (1000 * 60 * 60 * 24) < 0.5
                         ) {
                           className = className + " " + chatStyle.following;
@@ -199,6 +214,7 @@ export default function Page({ params }) {
                       })}
                 </ol>
               </div>
+              <div id={chatStyle.anchor} />
             </div>
           )}
           <div className={chatStyle.sender}>
@@ -228,7 +244,7 @@ export default function Page({ params }) {
               }}
               autoFocus={true}
               autoCorrect={"true"}
-              onKeyDown={handleKeyDown}
+              onKeyDownCapture={handleKeyUp}
             />
             <button onClick={handleNewMessage} className={chatStyle.send}>
               <span className="material-symbols-outlined">send</span>
@@ -242,17 +258,21 @@ export default function Page({ params }) {
 
 function GroupChatMessage(props) {
   const [user, setUser] = useState();
+  var lastMessageUser = props.messages && props.index - 1 >= 0 ? props.messages[props.index - 1].data.user : "";
+  var lastMessageDate = props.messages && props.index - 1 >= 0 ? props.messages[props.index - 1].data.date : "";
+  var lastMessageType = props.messages && props.index - 1 >= 0 && props.messages[props.index - 1].data.type ? props.messages[props.index - 1].data.type : "";
 
   useEffect(() => {
     if (
       !(
         props.message.data.user &&
-        props.messages &&
         (props.index - 1 < 0 ||
-          (props.index - 1 >= 0 && props.messages[props.index - 1].data.user !== props.message.data.user) ||
+          (props.index - 1 >= 0 && lastMessageUser !== props.message.data.user) ||
           (props.index - 1 >= 0 &&
-            props.messages[props.index - 1].data.user === props.message.data.user &&
-            (new Date(props.message.data.date) - new Date(props.messages[props.index - 1].data.date)) / (1000 * 60 * 60 * 24) >= 0.5))
+            lastMessageUser === props.message.data.user &&
+            lastMessageType !== "system" &&
+            (new Date(props.message.data.date) - new Date(lastMessageDate)) / (1000 * 60 * 60 * 24) >= 0.5) ||
+          (lastMessageType === "system" && props.message.data.type !== "system"))
       )
     ) {
       return;
@@ -263,7 +283,21 @@ function GroupChatMessage(props) {
     });
 
     return () => setUser();
-  }, [props.message, props.messages, props.index]);
+  }, [props.message.data.user, props.message.data.date, props.message.data.type, lastMessageUser, lastMessageDate, lastMessageType, props.index]);
+
+  const handleMessageDelete = () => {
+    const date = new Date().toJSON();
+    const previousMessages = props.message.previousMessages ? props.message.previousMessages : [];
+    console.log(previousMessages);
+
+    const promise = updateDocData("messages", props.message.id, {
+      content: "Message Deleted",
+      type: "system",
+      previousMessages: [...previousMessages, { content: props.message.data.content, date: date }],
+    }).then((res) => {
+      console.log;
+    });
+  };
 
   return (
     <>
@@ -301,6 +335,19 @@ function GroupChatMessage(props) {
           {props.message.data.content}
         </ReactMarkdown>
       </div>
+      {props.message.data.type !== "system" && (
+        <div className={chatStyle.controls}>
+          <button onClick={() => {}} className={chatStyle.edit}>
+            <span className="material-symbols-outlined">more_horiz</span>
+          </button>
+          <button onClick={() => {}} className={chatStyle.edit}>
+            <span className="material-symbols-outlined">edit</span>
+          </button>
+          <button onClick={handleMessageDelete} className={chatStyle.delete}>
+            <span className="material-symbols-outlined">delete</span>
+          </button>
+        </div>
+      )}
     </>
   );
 }
