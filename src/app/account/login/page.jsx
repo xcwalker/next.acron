@@ -7,48 +7,67 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react"
 import { toast } from "react-hot-toast";
 
-export default function Page() {
-    const { user } = useAuthContext()
-    const router = useRouter()
+export default function Page({ searchParams }) {
+  const { user, userLoading } = useAuthContext();
+  const router = useRouter();
 
-    const [loading, setLoading] = useState(false);
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-    const handleLogin = async () => {
-        const promise = signIn(email, password)
-            .then(res => {
-                if (res.error) {
-                    return console.error(res.error)
-                }
-        
-                // else successful
-                console.log(res.result)
-                return router.push("/user")
-            });
+  const handleLogin = async (e) => {
+    e.preventDefault();
 
-            toast.promise(promise, {
-                loading: "Signing In",
-                success: "Logged In",
-                error: "Check Email & Password",
-            })
-    }
+    const promise = signIn(email, password).then((res) => {
+      if (res.error) {
+        return console.error(res.error);
+      }
 
-    useEffect(() => {
-        if (user !== null) router.push("/user")
-    }, [user, router])
+      // else successful
+      console.log(res.result);
+      return router.push(searchParams.from ? searchParams.from : "/user");
+    });
 
-    return <>
-        <section className="account-handler">
-            <div className="container">
-                <form action="" onSubmit={handleLogin}>
-                    <input type="email" name="login-email" id="login-email" required placeholder="example@acron.dev" onChange={(e) => setEmail(e.target.value)} value={email} />
-                    <input type="password" name="login-password" id="login-password-one" required placeholder="password" onChange={(e) => setPassword(e.target.value)} value={password} />
-                    <button type="submit">Login</button>
-                </form>
-                <RelativeLink href="./signup">Don&#39;t Have An Account?</RelativeLink>
-                <RelativeLink href="./forgot">Forgot Password</RelativeLink>
-            </div>
-        </section>
+    toast.promise(promise, {
+      loading: "Signing In",
+      success: "Logged In",
+      error: "Check Email & Password",
+    });
+  };
+
+  useEffect(() => {
+    if (user && !userLoading) router.push(searchParams.from ? searchParams.from : "/user");
+  }, [user, userLoading, router, searchParams]);
+
+  return (
+    <>
+      <section className="account-handler">
+        <div className="container">
+          <form action="" onSubmit={handleLogin}>
+            <input
+              type="email"
+              name="login-email"
+              id="login-email"
+              required
+              placeholder="example@acron.dev"
+              onChange={(e) => setEmail(e.target.value)}
+              value={email}
+            />
+            <input
+              type="password"
+              name="login-password"
+              id="login-password-one"
+              required
+              placeholder="password"
+              onChange={(e) => setPassword(e.target.value)}
+              value={password}
+            />
+            <button type="submit">Login</button>
+          </form>
+          <RelativeLink href="./signup">Don&#39;t Have An Account?</RelativeLink>
+          <RelativeLink href="./forgot">Forgot Password</RelativeLink>
+        </div>
+      </section>
     </>
+  );
 }

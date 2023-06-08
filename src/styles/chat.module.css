@@ -37,7 +37,7 @@ section.chatSection > .container > .sidebar {
   position: relative;
 
   /* sizing */
-  width: clamp(350px, 25vw, 500px);
+  width: clamp(350px, 25vw, 400px);
   height: 100%;
   max-height: 100%;
   padding: 5px;
@@ -456,11 +456,11 @@ section.chatSection > .container > .main > .messages {
   height: 100%;
   max-height: 100%;
   overflow-y: scroll;
-  overflow-anchor: auto;
+  /* overflow-anchor: auto; */
   margin-inline: auto;
 }
 
-section.chatSection > .container > .main > .messages > .wrapper {
+section.chatSection > .container > .main > .messages  {
   /* sizing */
   width: 100%;
   min-height: 100%;
@@ -470,7 +470,7 @@ section.chatSection > .container > .main > .messages > .wrapper {
   flex-direction: column-reverse;
 }
 
-section.chatSection > .container > .main > .messages > .wrapper > ol {
+section.chatSection > .container > .main > .messages  > ol {
   /* sizing */
   width: 100%;
   min-height: 100%;
@@ -484,7 +484,7 @@ section.chatSection > .container > .main > .messages > .wrapper > ol {
   gap: 5px;
 }
 
-section.chatSection > .container > .main > .messages > .wrapper > ol > li {
+section.chatSection > .container > .main > .messages  > ol > li {
   /* variables */
   --_border-radius: 10px;
   --_border-radius-small: 2.5px;
@@ -498,7 +498,7 @@ section.chatSection > .container > .main > .messages > .wrapper > ol > li {
   list-style: none;
 }
 
-section.chatSection > .container > .main > .messages > .wrapper > ol > li .container {
+section.chatSection > .container > .main > .messages  > ol > li .container {
   /* sizing */
   width: fit-content;
   max-width: 350px;
@@ -507,13 +507,13 @@ section.chatSection > .container > .main > .messages > .wrapper > ol > li .conta
   border-radius: var(--_border-radius);
 }
 
-section.chatSection > .container > .main > .messages > .wrapper > ol > li p {
+section.chatSection > .container > .main > .messages  > ol > li p {
   /* sizing */
   margin: 0;
   padding: 10px 20px;
 }
 
-section.chatSection > .container > .main > .messages > .wrapper > ol > li.user .container {
+section.chatSection > .container > .main > .messages  > ol > li.user .container {
   /* spacing */
   margin-left: auto;
   margin-right: 0;
@@ -522,20 +522,20 @@ section.chatSection > .container > .main > .messages > .wrapper > ol > li.user .
   background-color: var(--form-color-selector);
 }
 
-section.chatSection > .container > .main > .messages > .wrapper > ol > li.user:has(+ li.user) .container {
+section.chatSection > .container > .main > .messages  > ol > li.user:has(+ li.user) .container {
   border-bottom-right-radius: var(--_border-radius-small);
 }
 
-section.chatSection > .container > .main > .messages > .wrapper > ol > li.user + li.user:has(+ li.user) .container {
+section.chatSection > .container > .main > .messages  > ol > li.user + li.user:has(+ li.user) .container {
   border-top-right-radius: var(--_border-radius-small);
   border-bottom-right-radius: var(--_border-radius-small);
 }
 
-section.chatSection > .container > .main > .messages > .wrapper > ol > li.user + li.user .container {
+section.chatSection > .container > .main > .messages  > ol > li.user + li.user .container {
   border-top-right-radius: var(--_border-radius-small);
 }
 
-section.chatSection > .container > .main > .messages > .wrapper > ol > li.otherUser .container {
+section.chatSection > .container > .main > .messages  > ol > li.otherUser .container {
   /* spacing */
   margin-left: 0;
   margin-right: auto;
@@ -544,16 +544,16 @@ section.chatSection > .container > .main > .messages > .wrapper > ol > li.otherU
   background-color: var(--_background-color-100);
 }
 
-section.chatSection > .container > .main > .messages > .wrapper > ol > li.otherUser:has(+ li.otherUser) .container {
+section.chatSection > .container > .main > .messages  > ol > li.otherUser:has(+ li.otherUser) .container {
   border-bottom-left-radius: var(--_border-radius-small);
 }
 
-section.chatSection > .container > .main > .messages > .wrapper > ol > li.otherUser + li.otherUser:has(+ li.otherUser) .container {
+section.chatSection > .container > .main > .messages  > ol > li.otherUser + li.otherUser:has(+ li.otherUser) .container {
   border-top-left-radius: var(--_border-radius-small);
   border-bottom-left-radius: var(--_border-radius-small);
 }
 
-section.chatSection > .container > .main > .messages > .wrapper > ol > li.otherUser + li.otherUser .container {
+section.chatSection > .container > .main > .messages  > ol > li.otherUser + li.otherUser .container {
   border-top-left-radius: var(--_border-radius-small);
 }
 
@@ -568,24 +568,17 @@ section.chatSection > .container > .main > .groupMessages {
   height: 100%;
   max-height: 100%;
   overflow-y: scroll;
-  /* overflow-anchor: auto; */
   margin-inline: auto;
 }
 
-section.chatSection > .container > .main > .groupMessages > .wrapper {
-  /* sizing */
-  width: 100%;
-  min-height: 100%;
-
-  /* flex */
-  display: flex;
-  flex-direction: column-reverse;
+section.chatSection > .container > .main > .groupMessages * {
+  overflow-anchor: none;
 }
 
-section.chatSection > .container > .main > .groupMessages > .wrapper > ol {
+section.chatSection > .container > .main > .groupMessages  > ol {
   /* sizing */
   width: 100%;
-  min-height: 100%;
+  min-height: 100.00001%;
   margin: 0;
   padding: 0;
 
@@ -595,7 +588,7 @@ section.chatSection > .container > .main > .groupMessages > .wrapper > ol {
   justify-content: flex-end;
 }
 
-section.chatSection > .container > .main > .groupMessages > .wrapper > ol > .divider {
+section.chatSection > .container > .main > .groupMessages  > ol > .divider {
   /* position */
   position: relative;
 
@@ -608,7 +601,7 @@ section.chatSection > .container > .main > .groupMessages > .wrapper > ol > .div
   border-radius: 100vmax;
   background-color: var(--_background-color-100);
 }
-section.chatSection > .container > .main > .groupMessages > .wrapper > ol > .divider > .date {
+section.chatSection > .container > .main > .groupMessages  > ol > .divider > .date {
   /* position */
   position: absolute;
   top: 50%;
@@ -622,7 +615,7 @@ section.chatSection > .container > .main > .groupMessages > .wrapper > ol > .div
   background-color: var(--background-color-100);
 }
 
-section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li {
+section.chatSection > .container > .main > .groupMessages  > ol > li {
   /* position */
   position: relative;
 
@@ -641,7 +634,7 @@ section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li {
   border-radius: 7.5px;
 }
 
-section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li.system {
+section.chatSection > .container > .main > .groupMessages  > ol > li.system {
   /* text */
   font-size: 12px;
   font-weight: 400;
@@ -651,11 +644,11 @@ section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li.s
   color: var(--_foreground-color-100);
 }
 
-section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li.system > .time {
+section.chatSection > .container > .main > .groupMessages  > ol > li.system > .time {
   top: 50%;
 }
 
-section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li > .controls {
+section.chatSection > .container > .main > .groupMessages  > ol > li > .controls {
   /* position */
   position: absolute;
   top: 0;
@@ -688,16 +681,16 @@ section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li >
   pointer-events: none;
 }
 
-section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li:hover > .controls,
-section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li:focus-within > .controls,
-section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li > .controls:hover,
-section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li > .controls:focus-within {
+section.chatSection > .container > .main > .groupMessages  > ol > li:hover > .controls,
+section.chatSection > .container > .main > .groupMessages  > ol > li:focus-within > .controls,
+section.chatSection > .container > .main > .groupMessages  > ol > li > .controls:hover,
+section.chatSection > .container > .main > .groupMessages  > ol > li > .controls:focus-within {
   /* hiding */
   opacity: 1;
   pointer-events: auto;
 }
 
-section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li > .controls button {
+section.chatSection > .container > .main > .groupMessages  > ol > li > .controls button {
   /* sizing */
   width: var(--_button-size);
   min-width: var(--_button-size);
@@ -718,49 +711,49 @@ section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li >
   /* border-radius: calc(var(--_border-radius) - var(--_padding)); */
 }
 
-section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li > .controls button span:global(.material-symbols-outlined) {
+section.chatSection > .container > .main > .groupMessages  > ol > li > .controls button span:global(.material-symbols-outlined) {
   /* text */
   font-size: calc((var(--_button-size) / 3) * 2);
 }
 
-section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li > .controls button.delete {
+section.chatSection > .container > .main > .groupMessages  > ol > li > .controls button.delete {
   /* styling */
   /* border: 2px solid var(--form-color-invalid); */
   /* background-color: var(--form-color-invalid-opac); */
   color: var(--form-color-invalid);
 }
 
-section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li > .controls button.delete:hover,
-section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li > .controls button.delete:focus-visible {
+section.chatSection > .container > .main > .groupMessages  > ol > li > .controls button.delete:hover,
+section.chatSection > .container > .main > .groupMessages  > ol > li > .controls button.delete:focus-visible {
   /* styling */
   background-color: var(--form-color-invalid);
   color: var(--dnu-light-color-100);
 }
 
-section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li > .controls button:hover,
-section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li > .controls button:focus-visible {
+section.chatSection > .container > .main > .groupMessages  > ol > li > .controls button:hover,
+section.chatSection > .container > .main > .groupMessages  > ol > li > .controls button:focus-visible {
   background-color: var(--_background-color-200);
 }
 
-section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li.before {
+section.chatSection > .container > .main > .groupMessages  > ol > li.before {
   margin-bottom: var(--_small-margin);
 }
 
-section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li.following {
+section.chatSection > .container > .main > .groupMessages  > ol > li.following {
   margin-top: var(--_small-margin);
 }
 
-section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li.before.following {
+section.chatSection > .container > .main > .groupMessages  > ol > li.before.following {
   margin-top: var(--_small-margin);
   margin-bottom: var(--_small-margin);
 }
 
-section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li:hover {
+section.chatSection > .container > .main > .groupMessages  > ol > li:hover {
   /* styling */
   background-color: var(--_background-color);
 }
 
-section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li > .time {
+section.chatSection > .container > .main > .groupMessages  > ol > li > .time {
   /* position */
   position: absolute;
   top: calc(27px / 2);
@@ -780,13 +773,13 @@ section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li >
   opacity: 0;
 }
 
-section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li:hover > .time,
-section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li:focus-visible > .time {
+section.chatSection > .container > .main > .groupMessages  > ol > li:hover > .time,
+section.chatSection > .container > .main > .groupMessages  > ol > li:focus-visible > .time {
   /* hiding */
   opacity: 1;
 }
 
-section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li .left {
+section.chatSection > .container > .main > .groupMessages  > ol > li .left {
   /* sizing */
   --_size: 40px;
   width: var(--_size);
@@ -797,7 +790,7 @@ section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li .
   justify-content: flex-start;
 }
 
-section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li .left img.profilePicture {
+section.chatSection > .container > .main > .groupMessages  > ol > li .left img.profilePicture {
   height: var(--_size);
   width: var(--_size);
 
@@ -808,11 +801,18 @@ section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li .
   border-radius: 50%;
 }
 
-section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li.following .left {
+section.chatSection > .container > .main > .groupMessages  > ol > li > .placeholder {
+  /* sizing */
+  --_size: 40px;
+  height: var(--_size);
+  width: var(--_size);
+}
+
+section.chatSection > .container > .main > .groupMessages  > ol > li.following .left {
   display: none;
 }
 
-section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li .right {
+section.chatSection > .container > .main > .groupMessages  > ol > li .right {
   /* flex */
   display: flex;
   flex-direction: column;
@@ -820,12 +820,15 @@ section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li .
   gap: 5px;
 }
 
-section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li.system .right,
-section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li.following .right {
+section.chatSection > .container > .main > .groupMessages  > ol > li.system .right,
+section.chatSection > .container > .main > .groupMessages  > ol > li.following .right {
   padding-left: 55px;
 }
-
-section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li .right .top {
+section.chatSection > .container > .main > .groupMessages  > ol > li .right > .textPlaceholder {
+  /* sizing */
+  height: 16px;
+}
+section.chatSection > .container > .main > .groupMessages  > ol > li .right .top {
   /* flex */
   display: flex;
   flex-direction: row;
@@ -834,7 +837,7 @@ section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li .
   gap: 5px;
 }
 
-section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li .right a.name {
+section.chatSection > .container > .main > .groupMessages  > ol > li .right a.name {
   /* flex */
   display: flex;
   flex-direction: row;
@@ -846,17 +849,17 @@ section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li .
   text-decoration: none;
 }
 
-section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li.following .right a.name {
+section.chatSection > .container > .main > .groupMessages  > ol > li.following .right a.name {
   display: none;
 }
 
-section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li .right a.name:hover span.displayname,
-section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li .right a.name:focus-visible span.displayname {
+section.chatSection > .container > .main > .groupMessages  > ol > li .right a.name:hover span.displayname,
+section.chatSection > .container > .main > .groupMessages  > ol > li .right a.name:focus-visible span.displayname {
   /* text */
   text-decoration: solid underline;
 }
 
-section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li .right a.name span.displayname {
+section.chatSection > .container > .main > .groupMessages  > ol > li .right a.name span.displayname {
   /* text */
   font-size: 16px;
   font-weight: 600;
@@ -866,8 +869,8 @@ section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li .
   color: var(--_foreground-color);
 }
 
-section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li .top .time,
-section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li .right a.name span.username {
+section.chatSection > .container > .main > .groupMessages  > ol > li .top .time,
+section.chatSection > .container > .main > .groupMessages  > ol > li .right a.name span.username {
   /* text */
   font-size: 12px;
   font-weight: 400;
@@ -877,16 +880,16 @@ section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li .
   color: var(--_foreground-color-100);
 }
 
-section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li .right .messageContent {
+section.chatSection > .container > .main > .groupMessages  > ol > li .right .messageContent {
   /* text */
   white-space: break-spaces;
 }
 
-section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li .right .messageContent p {
+section.chatSection > .container > .main > .groupMessages  > ol > li .right .messageContent p {
   margin: 0;
 }
 
-section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li .right .messageContent blockquote {
+section.chatSection > .container > .main > .groupMessages  > ol > li .right .messageContent blockquote {
   /* position */
   position: relative;
 
@@ -898,7 +901,7 @@ section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li .
   /* text */
   white-space: initial;
 }
-section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li .right .messageContent blockquote::after {
+section.chatSection > .container > .main > .groupMessages  > ol > li .right .messageContent blockquote::after {
   /* content */
   content: "";
 
@@ -915,7 +918,7 @@ section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li .
   background-color: var(--_background-color-100);
   border-radius: 100vmax;
 }
-section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li .right .messageContent a {
+section.chatSection > .container > .main > .groupMessages  > ol > li .right .messageContent a {
   /* text */
   text-decoration: underline solid;
 
@@ -923,28 +926,28 @@ section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li .
   color: var(--form-color-selector);
   border-radius: 1px;
 }
-section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li .right .messageContent a:hover,
-section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li .right .messageContent a:focus-visible {
+section.chatSection > .container > .main > .groupMessages  > ol > li .right .messageContent a:hover,
+section.chatSection > .container > .main > .groupMessages  > ol > li .right .messageContent a:focus-visible {
   /* text */
   text-decoration: underline dashed;
 }
 
-section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li .right .messageContent a:focus-visible {
+section.chatSection > .container > .main > .groupMessages  > ol > li .right .messageContent a:focus-visible {
   /* styling */
   outline: 2px solid currentColor;
   outline-offset: 3px;
 }
 
-/* section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li .right .messageContent em {} */
-/* section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li .right .messageContent strong {} */
-section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li .right .messageContent ul {
+/* section.chatSection > .container > .main > .groupMessages  > ol > li .right .messageContent em {} */
+/* section.chatSection > .container > .main > .groupMessages  > ol > li .right .messageContent strong {} */
+section.chatSection > .container > .main > .groupMessages  > ol > li .right .messageContent ul {
   /* sizing */
   padding-left: 15px;
 
   /* text */
   white-space: initial;
 }
-section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li .right .messageContent :global(.contains-task-list) {
+section.chatSection > .container > .main > .groupMessages  > ol > li .right .messageContent :global(.contains-task-list) {
   /* sizing */
   padding-left: 0;
 
@@ -954,7 +957,7 @@ section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li .
   /* styling */
   list-style: none;
 }
-section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li .right .messageContent ol {
+section.chatSection > .container > .main > .groupMessages  > ol > li .right .messageContent ol {
   /* sizing */
   padding-left: 15px;
 
@@ -963,8 +966,9 @@ section.chatSection > .container > .main > .groupMessages > .wrapper > ol > li .
 }
 
 section.chatSection > .container > .main > .sender {
-  /* spacing */
+  /* sizing */
   margin-top: 25px;
+  min-height: 70px;
 
   /* grid */
   display: grid;

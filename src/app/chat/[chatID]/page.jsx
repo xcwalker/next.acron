@@ -26,6 +26,8 @@ export default function Page({ params }) {
   const [messages, setMessages] = useState([]);
   const [img, setImg] = useState(chat?.about?.image);
   const [newMessage, setNewMessage] = useState("");
+  const [initial, setInitial] = useState(false);
+  var anchor = document.querySelector("#" + chatStyle.anchor);
 
   useEffect(() => {
     const unsubscribe = onSnapshot(doc(db, "chats", params.chatID), (doc) => {
@@ -36,11 +38,18 @@ export default function Page({ params }) {
   }, [params.chatID]);
 
   useEffect(() => {
+    if (document.querySelector("#" + chatStyle.anchor)) {
+      document.querySelector("#" + chatStyle.anchor).scrollIntoView();
+    }
+  }, []);
+
+  useEffect(() => {
     const q = query(collection(db, "messages"), where("channel", "==", params.chatID), orderBy("date", "desc"), limit(45));
     const unsubscribe = onSnapshot(q, async (querySnapshot) => {
       querySnapshot.forEach((doc) => {
         setMessages((m) => {
           if (m.length === 0) {
+            setInitial(true);
             return [{ data: doc.data(), id: doc.id }];
           }
           if (m.some((d) => d.id === doc.id)) {
@@ -65,6 +74,7 @@ export default function Page({ params }) {
     return () => {
       unsubscribe();
       setMessages([]);
+      setInitial(false);
     };
   }, [params.chatID]);
 
@@ -154,66 +164,64 @@ export default function Page({ params }) {
                       })}
                 </ol>
               </div>
-              <div id={chatStyle.anchor} />
+              {/* <div id={chatStyle.anchor} /> */}
             </div>
           )}
           {!(chat.users.from || chat.users.to) && (
             <div className={chatStyle.groupMessages}>
-              <div className={chatStyle.wrapper}>
-                <ol>
-                  {messages &&
-                    messages
-                      .sort((a, b) => a.data.date.localeCompare(b.data.date))
-                      .map((message, index) => {
-                        var messageDate = new Date(message.data.date);
-                        var className = message.data.type ? chatStyle[message.data.type] : "";
-                        if (
-                          messages[index + 1] &&
-                          messages[index + 1].data.user === message.data.user &&
-                          messages[index + 1].data.type !== "system" &&
-                          message.data.type !== "system" &&
-                          (new Date(messages[index + 1].data.date) - messageDate) / (1000 * 60 * 60 * 24) < 0.5
-                        ) {
-                          className = className + " " + chatStyle.before;
-                        }
-                        if (
-                          messages[index - 1] &&
-                          messages[index - 1].data.user === message.data.user &&
-                          messages[index - 1].data.type !== "system" &&
-                          message.data.type !== "system" &&
-                          (messageDate - new Date(messages[index - 1].data.date)) / (1000 * 60 * 60 * 24) < 0.5
-                        ) {
-                          className = className + " " + chatStyle.following;
-                        }
+              <ol>
+                {messages &&
+                  messages
+                    .sort((a, b) => a.data.date.localeCompare(b.data.date))
+                    .map((message, index) => {
+                      var messageDate = new Date(message.data.date);
+                      var className = message.data.type ? chatStyle[message.data.type] : "";
+                      if (
+                        messages[index + 1] &&
+                        messages[index + 1].data.user === message.data.user &&
+                        messages[index + 1].data.type !== "system" &&
+                        message.data.type !== "system" &&
+                        (new Date(messages[index + 1].data.date) - messageDate) / (1000 * 60 * 60 * 24) < 0.5
+                      ) {
+                        className = className + " " + chatStyle.before;
+                      }
+                      if (
+                        messages[index - 1] &&
+                        messages[index - 1].data.user === message.data.user &&
+                        messages[index - 1].data.type !== "system" &&
+                        message.data.type !== "system" &&
+                        (messageDate - new Date(messages[index - 1].data.date)) / (1000 * 60 * 60 * 24) < 0.5
+                      ) {
+                        className = className + " " + chatStyle.following;
+                      }
 
-                        if (
-                          !messages[index - 1] ||
-                          messageDate.getDate() !== new Date(messages[index - 1].data.date).getDate() ||
-                          messageDate.getMonth() !== new Date(messages[index - 1].data.date).getMonth() ||
-                          messageDate.getFullYear() !== new Date(messages[index - 1].data.date).getFullYear()
-                        ) {
-                          return (
-                            <Fragment key={index}>
-                              <div className={chatStyle.divider}>
-                                <span className={chatStyle.date}>
-                                  {new Intl.DateTimeFormat("en-US", { month: "long" }).format(messageDate)} {messageDate.getDate()}
-                                  {messageDate.getFullYear() !== new Date().getFullYear() && <span className="year"> {messageDate.getFullYear()}</span>}
-                                </span>
-                              </div>
-                              <li className={className}>
-                                <GroupChatMessage message={message} messages={messages} index={index} />
-                              </li>
-                            </Fragment>
-                          );
-                        }
+                      if (
+                        !messages[index - 1] ||
+                        messageDate.getDate() !== new Date(messages[index - 1].data.date).getDate() ||
+                        messageDate.getMonth() !== new Date(messages[index - 1].data.date).getMonth() ||
+                        messageDate.getFullYear() !== new Date(messages[index - 1].data.date).getFullYear()
+                      ) {
                         return (
-                          <li key={index} className={className}>
-                            <GroupChatMessage message={message} messages={messages} index={index} />
-                          </li>
+                          <Fragment key={index}>
+                            <div className={chatStyle.divider}>
+                              <span className={chatStyle.date}>
+                                {new Intl.DateTimeFormat("en-US", { month: "long" }).format(messageDate)} {messageDate.getDate()}
+                                {messageDate.getFullYear() !== new Date().getFullYear() && <span className="year"> {messageDate.getFullYear()}</span>}
+                              </span>
+                            </div>
+                            <li className={className}>
+                              <GroupChatMessage message={message} messages={messages} index={index} currentUser={user} />
+                            </li>
+                          </Fragment>
                         );
-                      })}
-                </ol>
-              </div>
+                      }
+                      return (
+                        <li key={index} className={className}>
+                          <GroupChatMessage message={message} messages={messages} index={index} currentUser={user} />
+                        </li>
+                      );
+                    })}
+              </ol>
               <div id={chatStyle.anchor} />
             </div>
           )}
@@ -258,6 +266,7 @@ export default function Page({ params }) {
 
 function GroupChatMessage(props) {
   const [user, setUser] = useState();
+  const [placeholder, setPlaceholder] = useState(false);
   var lastMessageUser = props.messages && props.index - 1 >= 0 ? props.messages[props.index - 1].data.user : "";
   var lastMessageDate = props.messages && props.index - 1 >= 0 ? props.messages[props.index - 1].data.date : "";
   var lastMessageType = props.messages && props.index - 1 >= 0 && props.messages[props.index - 1].data.type ? props.messages[props.index - 1].data.type : "";
@@ -278,11 +287,16 @@ function GroupChatMessage(props) {
       return;
     }
 
+    setPlaceholder(true);
+
     getDocument("users", props.message.data.user).then((res) => {
       setUser(res.result);
     });
 
-    return () => setUser();
+    return () => {
+      setUser();
+      setPlaceholder(false);
+    };
   }, [props.message.data.user, props.message.data.date, props.message.data.type, lastMessageUser, lastMessageDate, lastMessageType, props.index]);
 
   const handleMessageDelete = () => {
@@ -306,6 +320,7 @@ function GroupChatMessage(props) {
           <img src={user.images.photoURL} alt="" className={chatStyle.profilePicture} />
         </Link>
       )}
+      {placeholder && !user && <div className={chatStyle.placeholder} />}
       {!user && (
         <span className={chatStyle.time}>
           {"("}
@@ -327,6 +342,7 @@ function GroupChatMessage(props) {
             </span>
           </div>
         )}
+        {placeholder && !user && <div className={chatStyle.textPlaceholder} />}
         <ReactMarkdown
           disallowedElements={["h1", "h2", "h3", "h4", "h5", "h6"]}
           className={chatStyle.messageContent}
@@ -340,12 +356,16 @@ function GroupChatMessage(props) {
           <button onClick={() => {}} className={chatStyle.edit}>
             <span className="material-symbols-outlined">more_horiz</span>
           </button>
-          <button onClick={() => {}} className={chatStyle.edit}>
-            <span className="material-symbols-outlined">edit</span>
-          </button>
-          <button onClick={handleMessageDelete} className={chatStyle.delete}>
-            <span className="material-symbols-outlined">delete</span>
-          </button>
+          {props.currentUser.uid === props.message.data.user && (
+            <>
+              <button onClick={() => {}} className={chatStyle.edit}>
+                <span className="material-symbols-outlined">edit</span>
+              </button>
+              <button onClick={handleMessageDelete} className={chatStyle.delete}>
+                <span className="material-symbols-outlined">delete</span>
+              </button>
+            </>
+          )}
         </div>
       )}
     </>

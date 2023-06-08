@@ -1,8 +1,5 @@
 {
-    "cSpell.words": [
-        "Don"
-    ],
-    "cSpell.ignoreWords": [
-        "Don"
-    ]
+  "cSpell.words": ["Don", "scroller"],
+  "cSpell.ignoreWords": ["Don"],
+  "security.allowedUNCHosts": ["XCW-S-PRIMROSE"]
 }

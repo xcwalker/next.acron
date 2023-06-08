@@ -8,6 +8,7 @@ import chatStyle from "@/styles/chat.module.css";
 import Link from "next/link";
 import getDocument from "@/firebase/firestore/getData";
 import RemoveMarkdown from "remove-markdown";
+import { useRouter } from "next/navigation";
 
 const db = getFirestore(firebase_app);
 
@@ -17,9 +18,14 @@ export const metadata = {
 };
 
 export default function UserLayout({ children, params }) {
-  const { user } = useAuthContext();
+  const { user, loading } = useAuthContext();
   const [chats, setChats] = useState();
   const [search, setSearch] = useState("");
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!loading && !user) router.push("/account/login?from=/chat");
+  }, [user, loading, router]);
 
   useEffect(() => {
     if (!user) return;
@@ -42,7 +48,7 @@ export default function UserLayout({ children, params }) {
 
   return (
     <>
-      <section className={chatStyle.chatSection}>
+      {!loading && user && <section className={chatStyle.chatSection}>
         <div className={chatStyle.container}>
           <div className={chatStyle.sidebar}>
             <div className={chatStyle.search}>
@@ -91,7 +97,7 @@ export default function UserLayout({ children, params }) {
           </div>
           <div className={chatStyle.main}>{children}</div>
         </div>
-      </section>
+      </section>}
     </>
   );
 }
@@ -151,8 +157,8 @@ function ChatItem(props) {
     }
 
     return () => {
-        setImg(props.chat.data.about?.image);
-    }
+      setImg(props.chat.data.about?.image);
+    };
   }, [props.chat.data.users.from, props.chat.data.users.to, props.chat.data.about.image, props.user]);
 
   return (
