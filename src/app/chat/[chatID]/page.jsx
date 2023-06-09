@@ -15,6 +15,8 @@ import * as commands from "@uiw/react-md-editor/esm/commands";
 import "@uiw/react-md-editor/markdown-editor.css";
 import remarkGfm from "remark-gfm";
 import removeDoc from "@/firebase/firestore/removeData";
+import { useRef } from "react";
+import { useCallback } from "react";
 
 const MDEditor = dynamic(() => import("@uiw/react-md-editor"), { ssr: false });
 
@@ -26,8 +28,12 @@ export default function Page({ params }) {
   const [messages, setMessages] = useState([]);
   const [img, setImg] = useState(chat?.about?.image);
   const [newMessage, setNewMessage] = useState("");
-  const [initial, setInitial] = useState(false);
-  var anchor = document.querySelector("#" + chatStyle.anchor);
+  const ref = useCallback(node => {
+    if (node !== null) {
+      node.scrollIntoView();
+      console.log("scrolled into view:" , node)
+    }
+  }, []);
 
   useEffect(() => {
     const unsubscribe = onSnapshot(doc(db, "chats", params.chatID), (doc) => {
@@ -38,18 +44,11 @@ export default function Page({ params }) {
   }, [params.chatID]);
 
   useEffect(() => {
-    if (document.querySelector("#" + chatStyle.anchor)) {
-      document.querySelector("#" + chatStyle.anchor).scrollIntoView();
-    }
-  }, []);
-
-  useEffect(() => {
     const q = query(collection(db, "messages"), where("channel", "==", params.chatID), orderBy("date", "desc"), limit(45));
     const unsubscribe = onSnapshot(q, async (querySnapshot) => {
       querySnapshot.forEach((doc) => {
         setMessages((m) => {
           if (m.length === 0) {
-            setInitial(true);
             return [{ data: doc.data(), id: doc.id }];
           }
           if (m.some((d) => d.id === doc.id)) {
@@ -74,7 +73,6 @@ export default function Page({ params }) {
     return () => {
       unsubscribe();
       setMessages([]);
-      setInitial(false);
     };
   }, [params.chatID]);
 
@@ -181,7 +179,8 @@ export default function Page({ params }) {
                         messages[index + 1].data.user === message.data.user &&
                         messages[index + 1].data.type !== "system" &&
                         message.data.type !== "system" &&
-                        (new Date(messages[index + 1].data.date) - messageDate) / (1000 * 60 * 60 * 24) < 0.5
+                        (new Date(messages[index + 1].data.date) - messageDate) / (1000 * 60 * 60 * 24) < 0.5 &&
+                        messageDate.getDate() === new Date(messages[index + 1].data.date).getDate()
                       ) {
                         className = className + " " + chatStyle.before;
                       }
@@ -190,7 +189,8 @@ export default function Page({ params }) {
                         messages[index - 1].data.user === message.data.user &&
                         messages[index - 1].data.type !== "system" &&
                         message.data.type !== "system" &&
-                        (messageDate - new Date(messages[index - 1].data.date)) / (1000 * 60 * 60 * 24) < 0.5
+                        (messageDate - new Date(messages[index - 1].data.date)) / (1000 * 60 * 60 * 24) < 0.5 &&
+                        messageDate.getDate() === new Date(messages[index - 1].data.date).getDate()
                       ) {
                         className = className + " " + chatStyle.following;
                       }
@@ -221,8 +221,8 @@ export default function Page({ params }) {
                         </li>
                       );
                     })}
+                <div id={chatStyle.anchor} ref={ref} />
               </ol>
-              <div id={chatStyle.anchor} />
             </div>
           )}
           <div className={chatStyle.sender}>
@@ -275,13 +275,15 @@ function GroupChatMessage(props) {
     if (
       !(
         props.message.data.user &&
+        props.message.data.type !== "system" &&
         (props.index - 1 < 0 ||
           (props.index - 1 >= 0 && lastMessageUser !== props.message.data.user) ||
           (props.index - 1 >= 0 &&
             lastMessageUser === props.message.data.user &&
             lastMessageType !== "system" &&
             (new Date(props.message.data.date) - new Date(lastMessageDate)) / (1000 * 60 * 60 * 24) >= 0.5) ||
-          (lastMessageType === "system" && props.message.data.type !== "system"))
+          lastMessageType === "system" ||
+          (props.index - 1 >= 0 && new Date(props.message.data.date).getDate() !== new Date(lastMessageDate).getDate()))
       )
     ) {
       return;
