@@ -1,0 +1,85 @@
+dialog#dialog {
+  /* sizing */
+  padding: 25px;
+
+  /* styling */
+  color: var(--foreground-color-100);
+  background-color: transparent;
+  backdrop-filter: blur(5px) brightness(0.9);
+  border-radius: 10px;
+  border: none;
+}
+
+dialog#dialog > form.container {
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+dialog#dialog > form.container > h1 {
+  /* spacing */
+  margin: 0;
+  margin-inline: 35px;
+
+  /* text */
+  font-size: 25px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+dialog#dialog > form.container > div.controls {
+  /* sizing */
+  width: 100%;
+
+  /* grid */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(150px, 100%), 1fr));
+  gap: 10px;
+}
+
+dialog#dialog > form.container > div.controls > a,
+dialog#dialog > form.container > div.controls > button[type="submit"] {
+  /* variables */
+  --foreground-color: var(--foreground-color-200);
+  --background-color: var(--background-color-200);
+  --hover-color: var(--foreground-color-200);
+
+  /* sizing */
+  width: 100%;
+  padding: 10px 25px;
+
+  /* flex */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /* text */
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1;
+  text-decoration: none;
+
+  /* styling */
+  border-radius: 10px;
+  border: 2px solid var(--background-color);
+  background-color: var(--background-color);
+  color: var(--foreground-color);
+}
+
+dialog#dialog > form.container > div.controls > a:hover,
+dialog#dialog > form.container > div.controls > a:focus-visible,
+dialog#dialog > form.container > div.controls > button[type="submit"]:hover,
+dialog#dialog > form.container > div.controls > button[type="submit"]:focus-visible {
+  /* styling */
+  background-color: transparent;
+  color: var(--hover-color);
+  border-color: var(--hover-color);
+}
+
+dialog#dialog > form.container > div.controls > button[type="submit"] {
+  /* variables */
+  --foreground-color: var(--dnu-light-color-100);
+  --background-color: var(--form-color-invalid);
+  --hover-color: var(--form-color-invalid);
+}

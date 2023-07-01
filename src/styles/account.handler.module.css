@@ -1,0 +1,269 @@
+section.accountHandler {
+  /* sizing */
+  width: 100vw;
+  height: 100vh;
+}
+
+section.accountHandler > div.container {
+  /* position */
+  position: relative;
+
+  /* sizing */
+  width: 100%;
+  height: 100%;
+  padding: var(--header-style-padding);
+
+  /* flex */
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+section.accountHandler > div.container > div.form {
+  /* position */
+  position: absolute;
+  top: 50%;
+  left: calc(min(calc(var(--default-padding) * 4), max(4vw, var(--default-padding))) * 2);
+  translate: 0 -50%;
+
+  /* sizing */
+  width: min(450px, 100%);
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+section.accountHandler > div.container > div.form > form {
+  /* sizing */
+  padding: 25px;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  /* styling */
+  border-radius: 10px;
+  color: var(--foreground-color-100);
+  backdrop-filter: blur(5px) brightness(0.9);
+}
+
+section.accountHandler > div.container > div.form > form > svg {
+  /* sizing */
+  padding-inline: 100px;
+  padding-bottom: 15px;
+
+  /* styling */
+  color: inherit;
+  fill: currentColor;
+}
+
+section.accountHandler > div.container > div.form > form > input[type="email"],
+section.accountHandler > div.container > div.form > form > input[type="password"] {
+  /* sizing */
+  padding: 10px 15px;
+
+  /* text */
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1;
+
+  /* styling */
+  border-radius: 5px;
+  border: 3px solid var(--dnu-light-color-000);
+  background-color: var(--dnu-light-color-000);
+  color: var(--dnu-dark-color-000);
+}
+
+section.accountHandler > div.container > div.form > form > input[type="email"]:focus,
+section.accountHandler > div.container > div.form > form > input[type="password"]:focus {
+  /* styling */
+  border-color: var(--form-color-selector);
+  outline: none;
+}
+
+section.accountHandler > div.container > div.form > form > input[type="email"]:focus:invalid,
+section.accountHandler > div.container > div.form > form > input[type="password"]:focus:invalid {
+  /* styling */
+  border-color: var(--form-color-invalid);
+}
+
+section.accountHandler > div.container > div.form > form > input[type="email"]:focus:valid,
+section.accountHandler > div.container > div.form > form > input[type="password"]:focus:valid {
+  /* styling */
+  border-color: var(--form-color-valid-hold);
+}
+
+section.accountHandler > div.container > div.form > form > input[type="email"]:valid,
+section.accountHandler > div.container > div.form > form > input[type="password"]:valid {
+  /* styling */
+  border-color: var(--form-color-valid);
+}
+
+section.accountHandler > div.container > div.form > form > button[type="submit"] {
+  /* position */
+  position: relative;
+
+  /* sizing */
+  padding: 10px 15px;
+  height: 41px;
+
+  /* text */
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1;
+
+  /* styling */
+  border-radius: 5px;
+  border: none;
+  color: var(--dnu-light-color-100);
+  border: 3px solid var(--form-color-selector);
+  background-color: var(--form-color-selector);
+}
+
+section.accountHandler > div.container > div.form > form > button[type="submit"]:disabled {
+  background-color: var(--dnu-dark-color-500);
+  border-color: var(--dnu-dark-color-500);
+}
+
+section.accountHandler > div.container > div.form > form > button[type="submit"]:not(:disabled):hover {
+  background-color: transparent;
+}
+
+section.accountHandler > div.container > div.form > form > button[type="submit"] > .dots {
+  /* variables */
+  --size: 8px;
+  --animation-duration: 0.75s;
+
+  /* position */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+
+  /* sizing */
+  width: var(--size);
+  height: var(--size);
+
+  /* styling */
+  border-radius: 5px;
+  background-color: var(--dnu-light-color-000);
+  color: var(--dnu-light-color-000);
+
+  /* animation */
+  animation: dot-flashing var(--animation-duration) infinite linear alternate;
+  animation-delay: calc(var(--animation-duration) / 2);
+}
+section.accountHandler > div.container > div.form > form > button[type="submit"] > .dots::before,
+section.accountHandler > div.container > div.form > form > button[type="submit"] > .dots::after {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  top: 0;
+}
+section.accountHandler > div.container > div.form > form > button[type="submit"] > .dots::before {
+  /* position */
+  left: -15px;
+
+  /* sizing */
+  width: var(--size);
+  height: var(--size);
+
+  /* styling */
+  border-radius: 5px;
+  background-color: var(--dnu-light-color-000);
+  color: var(--dnu-light-color-000);
+
+  /* animation */
+  animation: dot-flashing var(--animation-duration) infinite alternate;
+  animation-delay: 0s;
+}
+section.accountHandler > div.container > div.form > form > button[type="submit"] > .dots::after {
+  /* position */
+  left: 15px;
+
+  /* sizing */
+  width: var(--size);
+  height: var(--size);
+
+  /* styling */
+  border-radius: 5px;
+  background-color: var(--dnu-light-color-000);
+  color: var(--dnu-light-color-000);
+
+  /* animation */
+  animation: dot-flashing var(--animation-duration) infinite alternate;
+  animation-delay: calc(var(--animation-duration) / 1);
+}
+
+@keyframes dot-flashing {
+  0% {
+    background-color: var(--dnu-light-color-000);
+  }
+  25% {
+    background-color: var(--dnu-light-color-000);
+  }
+  75%,
+  100% {
+    background-color: var(--dnu-light-color-500);
+  }
+}
+
+section.accountHandler > div.container > div.form > .others {
+  /* flex */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+
+section.accountHandler > div.container > div.form > .others > a {
+  /* styling */
+  color: var(--dnu-light-color-100);
+}
+
+section.accountHandler > div.container > img {
+  /* position */
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+
+  /* sizing */
+  width: 100%;
+  height: 100%;
+
+  /* image */
+  object-fit: cover;
+  object-position: center center;
+}
+
+section.accountHandler > div.container > div.info {
+  /* flex */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+
+  /* styling */
+  color: var(--dnu-light-color-000);
+}
+section.accountHandler > div.container > div.info svg {
+  /* sizing */
+  height: 16px;
+  width: 16px;
+
+  /* styling */
+  fill: currentColor;
+  color: inherit;
+}
+section.accountHandler > div.container > div.info a {
+  /* text */
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1;
+
+  /* styling */
+  color: inherit;
+}

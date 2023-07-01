@@ -2,6 +2,7 @@ html    {
         /* colors */
     /** DO NOT USE **/
     /* foreground */
+    --dnu-light-color-000: hsl(0, 0%, 100%);
     --dnu-light-color-100: hsl(0, 0%, 93%);
     --dnu-light-color-200: hsl(0, 0%, 87%);
     --dnu-light-color-300: hsl(0, 0%, 81%);
@@ -9,6 +10,7 @@ html    {
     --dnu-light-color-500: hsl(0, 0%, 69%);
 
     /* background */
+    --dnu-dark-color-000: hsl(0, 0%, 0%);
     --dnu-dark-color-100: hsl(0, 0%, 7%);
     --dnu-dark-color-200: hsl(0, 0%, 13%);
     --dnu-dark-color-300: hsl(0, 0%, 19%);
