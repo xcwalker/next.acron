@@ -45,6 +45,9 @@ dialog#dialog > form.container > div.controls > button[type="submit"] {
   --background-color: var(--background-color-200);
   --hover-color: var(--foreground-color-200);
 
+  /* position */
+  position: relative;
+
   /* sizing */
   width: 100%;
   padding: 10px 25px;
@@ -82,4 +85,83 @@ dialog#dialog > form.container > div.controls > button[type="submit"] {
   --foreground-color: var(--dnu-light-color-100);
   --background-color: var(--form-color-invalid);
   --hover-color: var(--form-color-invalid);
+}
+
+dialog#dialog > form.container > div.controls > button[type="submit"] > .dots {
+  /* variables */
+  --size: 8px;
+  --animation-duration: 0.75s;
+
+  /* position */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+
+  /* sizing */
+  width: var(--size);
+  height: var(--size);
+
+  /* styling */
+  border-radius: 5px;
+  background-color: var(--dnu-light-color-000);
+  color: var(--dnu-light-color-000);
+
+  /* animation */
+  animation: dot-flashing var(--animation-duration) infinite linear alternate;
+  animation-delay: calc(var(--animation-duration) / 2);
+}
+dialog#dialog > form.container > div.controls > button[type="submit"] > .dots::before,
+dialog#dialog > form.container > div.controls > button[type="submit"] > .dots::after {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  top: 0;
+}
+dialog#dialog > form.container > div.controls > button[type="submit"] > .dots::before {
+  /* position */
+  left: -15px;
+
+  /* sizing */
+  width: var(--size);
+  height: var(--size);
+
+  /* styling */
+  border-radius: 5px;
+  background-color: var(--dnu-light-color-000);
+  color: var(--dnu-light-color-000);
+
+  /* animation */
+  animation: dot-flashing var(--animation-duration) infinite alternate;
+  animation-delay: 0s;
+}
+dialog#dialog > form.container > div.controls > button[type="submit"] > .dots::after {
+  /* position */
+  left: 15px;
+
+  /* sizing */
+  width: var(--size);
+  height: var(--size);
+
+  /* styling */
+  border-radius: 5px;
+  background-color: var(--dnu-light-color-000);
+  color: var(--dnu-light-color-000);
+
+  /* animation */
+  animation: dot-flashing var(--animation-duration) infinite alternate;
+  animation-delay: calc(var(--animation-duration) / 1);
+}
+
+@keyframes dot-flashing {
+  0% {
+    background-color: var(--dnu-light-color-000);
+  }
+  25% {
+    background-color: var(--dnu-light-color-000);
+  }
+  75%,
+  100% {
+    background-color: var(--dnu-light-color-500);
+  }
 }

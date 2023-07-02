@@ -26,12 +26,60 @@ section.accountHandler > div.container > div.form {
   translate: 0 -50%;
 
   /* sizing */
-  width: min(450px, 100%);
+  width: min(450px, calc(100% - 20px));
 
   /* flex */
   display: flex;
   flex-direction: column;
   gap: 5px;
+}
+
+@media (max-width: 1000px) {
+  section.accountHandler > div.container > div.form {
+    /* position */
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+  }
+}
+
+@media (max-width: 470px) or (max-height: 450px) {
+  section.accountHandler > div.container > div.form {
+    /* position */
+    inset: calc(min(calc(var(--default-padding) * 4), max(4vw, var(--default-padding))) / 2);
+    translate: 0 0;
+
+    /* sizing */
+    width: unset;
+  }
+
+  section.accountHandler > div.container > div.form > form {
+    /* flex */
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+  }
+
+  section.accountHandler > div.container > div.form > form > button[type="submit"],
+  section.accountHandler > div.container > div.form > form > input {
+    /* sizing */
+    width: min(400px, 100%);
+  }
+
+  section.accountHandler > div.container > div.form > form > .others {
+    display: flex !important;
+  }
+
+  section.accountHandler > div.container > div.form > .others {
+    display: none !important;
+  }
+}
+
+@media (max-height: 450px) {
+  section.accountHandler > div.container > div.form > form > svg {
+    /* hiding */
+    display: none;
+  }
 }
 
 section.accountHandler > div.container > div.form > form {
@@ -51,7 +99,8 @@ section.accountHandler > div.container > div.form > form {
 
 section.accountHandler > div.container > div.form > form > svg {
   /* sizing */
-  padding-inline: 100px;
+  width: 200px;
+  margin-inline: auto;
   padding-bottom: 15px;
 
   /* styling */
@@ -72,8 +121,11 @@ section.accountHandler > div.container > div.form > form > input[type="password"
   /* styling */
   border-radius: 5px;
   border: 3px solid var(--dnu-light-color-000);
-  background-color: var(--dnu-light-color-000);
-  color: var(--dnu-dark-color-000);
+  /* background-color: var(--dnu-light-color-000); */
+  /* color: var(--dnu-dark-color-000); */
+  background-color: transparent;
+  backdrop-filter: blur(5px) brightness(0.75);
+  color: var(--dnu-light-color-000);
 }
 
 section.accountHandler > div.container > div.form > form > input[type="email"]:focus,
@@ -210,7 +262,7 @@ section.accountHandler > div.container > div.form > form > button[type="submit"]
   }
 }
 
-section.accountHandler > div.container > div.form > .others {
+section.accountHandler > div.container > div.form .others {
   /* flex */
   display: flex;
   flex-direction: row;
@@ -219,9 +271,19 @@ section.accountHandler > div.container > div.form > .others {
   gap: 15px;
 }
 
-section.accountHandler > div.container > div.form > .others > a {
+section.accountHandler > div.container > div.form > form > .others {
+  display: none;
+}
+
+section.accountHandler > div.container > div.form .others > a {
   /* styling */
   color: var(--dnu-light-color-100);
+
+  /* text */
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1;
+  text-align: center;
 }
 
 section.accountHandler > div.container > img {
@@ -240,6 +302,12 @@ section.accountHandler > div.container > img {
 }
 
 section.accountHandler > div.container > div.info {
+  /* position */
+  position: absolute;
+  bottom: calc(min(calc(var(--default-padding) * 4), max(4vw, var(--default-padding))) * 1.5);
+  left: calc(min(calc(var(--default-padding) * 4), max(4vw, var(--default-padding))) * 1.5);
+  z-index: 997;
+
   /* flex */
   display: flex;
   flex-direction: row;
